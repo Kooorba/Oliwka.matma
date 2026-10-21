@@ -486,7 +486,7 @@ function check() {
   $('ans').disabled = true;
   $('btnCheck').style.display = 'none'; $('btnHint').style.display = 'none'; $('btnNext').style.display = '';
   $('fb').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  $('btnNext').focus();
+ 
 }
 
 
@@ -497,9 +497,14 @@ $('btnHint').onclick = () => { $('hint').innerHTML = '💡 ' + cur.hint; $('hint
 $('btnReset').onclick = () => {
   if (confirm('Na pewno wyczyścić wyniki i gwiazdki?')) { state = { stats: {}, stars: 0 }; save(); renderStats(); renderScore(); }
 };
+
 document.addEventListener('keydown', e => {
-  if (e.key === 'Enter') { answered ? nextQuestion() : check(); }
+  if (e.key !== 'Enter') return;
+  e.preventDefault();      // blokuje „podwójne” kliknięcie przez przeglądarkę
+  if (e.repeat) return;    // ignoruje przytrzymany klawisz
+  answered ? nextQuestion() : check();
 });
+
 
 renderChips(); renderScore(); renderStats(); nextQuestion();
 </script>
