@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matematyka – klasa 3</title>
+<style>
+  :root{--main:#4a74f3;--dark:#2649b2;--ok:#1f9d55;--bad:#d64545;--bg:#f3f5ff}
+  *{box-sizing:border-box}
+  body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);margin:0;padding:12px;color:#222}
+  .wrap{max-width:680px;margin:0 auto}
+  h1{color:var(--dark);text-align:center;margin:8px 0}
+  .card{background:#fff;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{border:2px solid var(--main);background:#fff;color:var(--dark);border-radius:20px;padding:6px 10px;cursor:pointer;font-size:14px}
+  .chip.on{background:var(--main);color:#fff}
+  .score{display:flex;justify-content:space-around;text-align:center;font-size:15px}
+  .score b{font-size:22px;display:block;color:var(--dark)}
+  .topic{font-size:13px;color:#667;margin-bottom:6px}
+  .question{font-size:22px;line-height:1.4;margin:8px 0 12px}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  input[type=text]{font-size:22px;padding:8px 12px;border:2px solid #bbc;border-radius:10px;width:220px}
+  button{font-size:17px;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;background:var(--main);color:#fff}
+  button.sec{background:#e5e9fb;color:var(--dark)}
+  button:disabled{opacity:.5;cursor:default}
+  .fb{margin-top:12px;padding:12px;border-radius:10px;display:none;font-size:17px;line-height:1.5}
+  .fb.ok{background:#e4f7ec;display:block}
+  .fb.bad{background:#fde8e8;display:block}
+  .hint{margin-top:10px;background:#fff8dc;padding:10px;border-radius:10px;display:none}
+  .bar{background:#e5e9fb;border-radius:6px;height:10px;overflow:hidden}
+  .bar div{background:var(--ok);height:100%}
+  table{border-collapse:collapse;margin:6px 0}
+  td,th{border:1px solid #ccd;padding:4px 10px;text-align:center}
+  summary{cursor:pointer;font-weight:bold;color:var(--dark)}
+  svg{display:block;margin:0 auto 10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🧮 Matematyka – klasa 3</h1>
+
+  <div class="card">
+    <div class="topic">Wybierz, co chcesz ćwiczyć (kliknij, aby włączyć lub wyłączyć):</div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <div class="card score">
+    <div><b id="sOk">0</b>dobrze</div>
+    <div><b id="sAll">0</b>zadań</div>
+    <div><b id="sStreak">0</b>🔥 seria</div>
+    <div><b id="sStars">0</b>⭐ gwiazdki</div>
+  </div>
+
+  <div class="card">
+    <div class="topic" id="qTopic"></div>
+    <div id="qSvg"></div>
+    <div class="question" id="qText"></div>
+    <div class="row">
+      <input type="text" id="ans" autocomplete="off" autocapitalize="off">
+      <span id="unit"></span>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button id="btnCheck">Sprawdź</button>
+      <button class="sec" id="btnHint">💡 Podpowiedź</button>
+      <button class="sec" id="btnNext" style="display:none">Dalej ➜</button>
+    </div>
+    <div class="hint" id="hint"></div>
+    <div class="fb" id="fb"></div>
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>📖 Ściąga: miary i zegar</summary>
+      <p><b>Objętość (litry)</b></p>
+      <table>
+        <tr><td>1 l</td><td>= 2 × pół litra (½ l)</td></tr>
+        <tr><td>1 l</td><td>= 4 × ćwierć litra (¼ l)</td></tr>
+        <tr><td>pół litra</td><td>= 2 × ćwierć litra</td></tr>
+      </table>
+      <p><b>Masa</b></p>
+      <table>
+        <tr><td>1 kg</td><td>= 100 dag</td><td>= 1000 g</td></tr>
+        <tr><td>1 dag</td><td>= 10 g</td><td></td></tr>
+        <tr><td>pół kg</td><td>= 50 dag</td><td>= 500 g</td></tr>
+        <tr><td>ćwierć kg</td><td>= 25 dag</td><td>= 250 g</td></tr>
+      </table>
+      <p><b>Czas</b></p>
+      <table>
+        <tr><td>1 godzina</td><td>= 60 minut</td></tr>
+        <tr><td>kwadrans</td><td>= 15 minut</td></tr>
+        <tr><td>pół godziny</td><td>= 30 minut</td></tr>
+      </table>
+      <p><b>Układ dziesiątkowy:</b> 1 setka = 10 dziesiątek = 100 jedności.</p>
+    </details>
+  </div>
+
+  <div class="card">
+    <details>
+      <summary>📊 Moje wyniki (w czym jestem dobra, co ćwiczyć)</summary>
+      <div id="stats"></div>
+      <p><button class="sec" id="btnReset">Wyczyść wyniki</button></p>
+      <small>Strona częściej losuje zadania z tych działów, w których pojawia się więcej błędów.</small>
+    </details>
+  </div>
+</div>
+
+<script>
+// ---------- pomocnicze ----------
+const rnd = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+const pick = arr => arr[rnd(0, arr.length - 1)];
+const pad = n => String(n).padStart(2, '0');
+const norm = s => s.toLowerCase().replace(/ł/g, 'l').normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+
+// ---------- liczby słownie ----------
+const ONES = ['zero','jeden','dwa','trzy','cztery','pięć','sześć','siedem','osiem','dziewięć'];
+const TEENS = ['dziesięć','jedenaście','dwanaście','trzynaście','czternaście','piętnaście','szesnaście','siedemnaście','osiemnaście','dziewiętnaście'];
+const TENS = ['','','dwadzieścia','trzydzieści','czterdzieści','pięćdziesiąt','sześćdziesiąt','siedemdziesiąt','osiemdziesiąt','dziewięćdziesiąt'];
+const HUNDREDS = ['','sto','dwieście','trzysta','czterysta','pięćset','sześćset','siedemset','osiemset','dziewięćset'];
+function toWords(n) {
+  if (n === 1000) return 'tysiąc';
+  const parts = [];
+  const h = Math.floor(n / 100), rest = n % 100;
+  if (h) parts.push(HUNDREDS[h]);
+  if (rest >= 10 && rest < 20) parts.push(TEENS[rest - 10]);
+  else {
+    if (rest >= 20) parts.push(TENS[Math.floor(rest / 10)]);
+    if (rest % 10) parts.push(ONES[rest % 10]);
+  }
+  return parts.join(' ') || 'zero';
+}
+
+// ---------- zegar (SVG) ----------
+function clockSvg(h, m) {
+  const cx = 100, cy = 100;
+  const pt = (angle, len) => [cx + len * Math.sin(angle * Math.PI / 180), cy - len * Math.cos(angle * Math.PI / 180)];
+  let s = '<svg width="200" height="200" viewBox="0 0 200 200"><circle cx="100" cy="100" r="95" fill="#fff" stroke="#2649b2" stroke-width="5"/>';
+  for (let i = 0; i < 60; i++) {
+    const a = i * 6, big = i % 5 === 0;
+    const [x1, y1] = pt(a, big ? 82 : 88), [x2, y2] = pt(a, 93);
+    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#333" stroke-width="${big ? 3 : 1}"/>`;
+  }
+  for (let i = 1; i <= 12; i++) {
+    const [x, y] = pt(i * 30, 68);
+    s += `<text x="${x}" y="${y + 7}" font-size="20" text-anchor="middle" font-weight="bold" fill="#2649b2">${i}</text>`;
+  }
+  const [hx, hy] = pt((h % 12) * 30 + m * 0.5, 45);
+  const [mx, my] = pt(m * 6, 72);
+  s += `<line x1="100" y1="100" x2="${hx}" y2="${hy}" stroke="#222" stroke-width="7" stroke-linecap="round"/>`;
+  s += `<line x1="100" y1="100" x2="${mx}" y2="${my}" stroke="#d64545" stroke-width="4" stroke-linecap="round"/>`;
+  s += '<circle cx="100" cy="100" r="5" fill="#222"/></svg>';
+  return s;
+}
+const fmtTime = (h, m) => `${h}:${pad(m)}`;
+function addMinutes(h, m, d) {
+  const t = h * 60 + m + d;
+  let hh = Math.floor(t / 60) % 12; if (hh === 0) hh = 12;
+  return { h: hh, m: t % 60 };
+}
+
+// ---------- generatory zadań ----------
+// Każdy zwraca: {html, type: 'num'|'text'|'time', answer, show, hint, explain, unit?, svg?}
+const num = (html, answer, hint, explain, unit = '') => ({ html, type: 'num', answer, show: answer + (unit ? ' ' + unit : ''), hint, explain, unit });
+
+function genMult() {
+  const a = rnd(2, 10), b = rnd(2, 10);
+  const p = a * b;
+  if (Math.random() < 0.3) {
+    return num(`? × ${b} = ${p}`, a, `Zapytaj siebie: ile razy ${b} daje ${p}? Policz skokami po ${b}.`,
+      `${a} × ${b} = ${p}, więc brakuje liczby ${a}.`);
+  }
+  return num(`${a} × ${b} = ?`, p, `Policz skokami: ${Array.from({length: Math.min(b, 5)}, (_, i) => a * (i + 1)).join(', ')}…`,
+    `${a} × ${b} to ${b} razy po ${a}: ${Array.from({length: b}, () => a).join(' + ')} = ${p}.`);
+}
+function genDiv() {
+  const d = rnd(2, 10), q = rnd(2, Math.floor(60 / d)), n = d * q;
+  if (Math.random() < 0.3) {
+    return num(`Podziel ${n} na ${d} równych części. Ile jest w jednej części?`, q, `Szukaj liczby, która pomnożona przez ${d} da ${n}.`,
+      `${n} : ${d} = ${q}, bo ${q} × ${d} = ${n}.`);
+  }
+  return num(`${n} : ${d} = ?`, q, `Pomyśl: ile razy ${d} mieści się w ${n}? Albo: ? × ${d} = ${n}.`,
+    `${n} : ${d} = ${q}, bo ${q} × ${d} = ${n}. Dzielenie to odwrotność mnożenia.`);
+}
+function genAS100() {
+  if (Math.random() < 0.5) {
+    const a = rnd(11, 90), b = rnd(5, 100 - a);
+    const bt = Math.floor(b / 10) * 10, bo = b % 10;
+    return num(`${a} + ${b} = ?`, a + b, `Dodaj osobno dziesiątki, potem jedności.`,
+      bo ? `${a} + ${bt} = ${a + bt}, potem ${a + bt} + ${bo} = ${a + b}.` : `${a} + ${bt} = ${a + b}.`);
+  }
+  const a = rnd(21, 100), b = rnd(5, a - 1);
+  const bt = Math.floor(b / 10) * 10, bo = b % 10;
+  return num(`${a} − ${b} = ?`, a - b, `Odejmij osobno dziesiątki, potem jedności.`,
+    bo ? `${a} − ${bt} = ${a - bt}, potem ${a - bt} − ${bo} = ${a - b}.` : `${a} − ${bt} = ${a - b}.`);
+}
+function genAS1000() {
+  const add = Math.random() < 0.5;
+  const mixed = Math.random() < 0.4;
+  if (add) {
+    const a = mixed ? rnd(101, 799) : rnd(1, 8) * 100;
+    const b = rnd(1, Math.floor((1000 - a) / 100)) * 100;
+    return num(`${a} + ${b} = ?`, a + b, `Dodajemy same setki: ${b / 100} setki do cyfry setek.`,
+      mixed ? `Zmieniają się tylko setki: ${Math.floor(a / 100)} setek + ${b / 100} setek = ${Math.floor(a / 100) + b / 100} setek, reszta zostaje. Wynik: ${a + b}.`
+            : `${a / 100} setek + ${b / 100} setek = ${(a + b) / 100} setek = ${a + b}.`);
+  }
+  const a = mixed ? rnd(301, 999) : rnd(2, 10) * 100;
+  const b = rnd(1, Math.floor((a - (mixed ? 1 : 0)) / 100)) * 100;
+  const A = mixed ? a : a;
+  return num(`${A} − ${b} = ?`, A - b, `Odejmujemy same setki.`,
+    mixed ? `Odejmujemy ${b / 100} setek od ${Math.floor(A / 100)} setek, reszta zostaje. Wynik: ${A - b}.`
+          : `${A / 100} setek − ${b / 100} setek = ${(A - b) / 100} setek = ${A - b}.`);
+}
+
+const NAMES = ['Ania', 'Kasia', 'Zosia', 'Tomek', 'Olek', 'Maja', 'Staś', 'Lena'];
+function genWord() {
+  const n = pick(NAMES);
+  const t = rnd(1, 8);
+  if (t === 1) {
+    const a = rnd(3, 10), b = rnd(2, Math.floor(100 / a));
+    return num(`${n} układa ołówki w pudełkach. Jedno pudełko: ${a} ołówków. Liczba pudełek: ${b}. Ile ołówków jest razem?`, a * b,
+      'Mamy kilka takich samych grup, więc mnożymy.', `${b} pudełek po ${a} ołówków: ${a} × ${b} = ${a * b}.`);
+  }
+  if (t === 2) {
+    const d = rnd(2, 6), q = rnd(2, Math.floor(60 / d)), s = d * q;
+    return num(`${n} ma ${s} cukierków i dzieli je po równo między ${d} osób. Ile cukierków dostanie jedna osoba?`, q,
+      'Dzielimy po równo, więc dzielimy.', `${s} : ${d} = ${q}, bo ${q} × ${d} = ${s}.`);
+  }
+  if (t === 3) {
+    const a = rnd(40, 100), b = rnd(10, a - 5);
+    return num(`${n} miał(a) ${a} zł. Kupił(a) książkę za ${b} zł. Ile złotych zostało?`, a - b,
+      'Coś zostało, czyli odejmujemy.', `${a} − ${b} = ${a - b} zł.`, 'zł');
+  }
+  if (t === 4) {
+    const a = rnd(20, 60), b = rnd(10, 100 - a);
+    return num(`W sadzie rośnie ${a} jabłoni i ${b} grusz. Ile drzew rośnie w sadzie?`, a + b,
+      'Łączymy dwie grupy, więc dodajemy.', `${a} + ${b} = ${a + b}.`);
+  }
+  if (t === 5) {
+    const a = rnd(30, 60), b = rnd(10, a - 5);
+    return num(`${n} ma ${a} naklejek, a jej brat ${b}. O ile naklejek więcej ma ${n}?`, a - b,
+      '„O ile więcej” to różnica, czyli odejmowanie.', `${a} − ${b} = ${a - b}.`);
+  }
+  if (t === 6) {
+    const k = rnd(2, 5), p = rnd(3, Math.floor(50 / k)), paid = 50;
+    return num(`${n} kupił(a) ${k} zeszyty po ${p} zł każdy i zapłacił(a) 50 zł. Ile reszty dostał(a)?`, paid - k * p,
+      'Najpierw policz, ile kosztują wszystkie zeszyty (mnożenie), potem odejmij od 50 zł.',
+      `Zeszyty: ${k} × ${p} = ${k * p} zł. Reszta: 50 − ${k * p} = ${paid - k * p} zł.`, 'zł');
+  }
+  if (t === 7) {
+    const a = rnd(2, 6), k = rnd(2, Math.floor(60 / a) > 8 ? 8 : Math.floor(60 / a)), b = a * k;
+    return num(`${n} ma ${a} cukierków, a Olek ${b}. Ile razy więcej cukierków ma Olek?`, k,
+      '„Ile razy więcej” to dzielenie większej liczby przez mniejszą.', `${b} : ${a} = ${k}, bo ${k} × ${a} = ${b}.`);
+  }
+  const kg = rnd(1, 3), dag = rnd(1, 9) * 10;
+  return num(`${n} kupił(a) ${kg} kg jabłek i ${dag} dag gruszek. Ile dekagramów owoców kupił(a) razem?`, kg * 100 + dag,
+    'Zamień kilogramy na dekagramy (1 kg = 100 dag), potem dodaj.',
+    `${kg} kg = ${kg * 100} dag. ${kg * 100} + ${dag} = ${kg * 100 + dag} dag.`, 'dag');
+}
+
+function genClock() {
+  const t = rnd(1, 5);
+  if (t <= 2) {
+    const h = rnd(1, 12), m = Math.random() < 0.7 ? rnd(0, 11) * 5 : rnd(0, 59);
+    return { html: 'Która godzina jest na zegarze? Wpisz np. 3:15', type: 'time', answer: { h, m }, show: fmtTime(h, m),
+      svg: clockSvg(h, m), hint: 'Krótka, gruba wskazówka pokazuje godziny. Długa, czerwona pokazuje minuty. Każda duża cyfra to 5 minut (np. przy 3 jest 15 minut).',
+      explain: `Krótka wskazówka jest przy ${h}, długa pokazuje ${m} minut. Jest godzina ${fmtTime(h, m)}. Minuty liczymy po 5 przy każdej cyfrze.` };
+  }
+  if (t === 3) {
+    const h = rnd(1, 12), m = rnd(0, 11) * 5, d = rnd(3, 18) * 5;
+    const r = addMinutes(h, m, d);
+    return { html: `Lekcja zaczyna się o ${fmtTime(h, m)} i trwa ${d} minut. O której się kończy? Wpisz np. 9:05`, type: 'time',
+      answer: r, show: fmtTime(r.h, r.m), hint: 'Pamiętaj: gdy minut jest 60, zaczyna się następna godzina.',
+      explain: `${fmtTime(h, m)} + ${d} min. Pełna godzina to 60 minut, ${d} min = ${Math.floor(d / 60)} h ${d % 60} min. Wychodzi ${fmtTime(r.h, r.m)}.` };
+  }
+  if (t === 4) {
+    const h = rnd(1, 10), m = rnd(0, 11) * 5, d = rnd(4, 22) * 5;
+    const r = addMinutes(h, m, d);
+    return num(`Film zaczął się o ${fmtTime(h, m)}, a skończył o ${fmtTime(r.h, r.m)}. Ile minut trwał?`, d,
+      'Policz od początku do pełnej godziny, a potem resztę minut do końca.',
+      `Od ${fmtTime(h, m)} do ${fmtTime(r.h, r.m)} mija ${d} minut.`, 'min');
+  }
+  if (Math.random() < 0.5) {
+    const h = rnd(1, 4);
+    return num(`Ile minut ma ${h === 1 ? '1 godzina' : h + ' godziny'}?`, h * 60, '1 godzina = 60 minut.', `${h} × 60 = ${h * 60} minut.`, 'min');
+  }
+  const h = rnd(2, 4);
+  return num(`${h * 60} minut to ile godzin?`, h, '1 godzina = 60 minut.', `${h * 60} : 60 = ${h}.`, 'godz.');
+}
+
+function genVolume() {
+  const t = rnd(1, 6);
+  const hint = '1 litr = 2 × pół litra = 4 × ćwierć litra.';
+  if (t === 1) { const n = rnd(1, 5); return num(`Ile ćwiartek litra (¼ l) jest w ${n} l?`, n * 4, hint, `W 1 litrze są 4 ćwiartki, więc w ${n} l: ${n} × 4 = ${n * 4}.`, 'ćwiartek'); }
+  if (t === 2) { const n = rnd(2, 8); return num(`Ile półlitrowych szklanek (½ l) można napełnić z ${n} l soku?`, n * 2, hint, `W 1 litrze są 2 połówki, więc ${n} × 2 = ${n * 2}.`, 'szklanek'); }
+  if (t === 3) { const k = rnd(2, 6) * 4; return num(`${k} ćwiartek litra to ile litrów?`, k / 4, hint, `4 ćwiartki to 1 litr, więc ${k} : 4 = ${k / 4}.`, 'l'); }
+  if (t === 4) { const k = rnd(2, 8) * 2; return num(`${k} półlitrowych butelek to ile litrów wody?`, k / 2, hint, `2 połówki to 1 litr, więc ${k} : 2 = ${k / 2}.`, 'l'); }
+  if (t === 5) { const x = rnd(1, 3), y = rnd(1, 3); return num(`Nalano ${x === 1 ? 'pół litra' : x + ' razy pół litra'} i dolano ${y} ${y === 1 ? 'ćwierć litra' : 'razy ćwierć litra'}. Ile to razem ćwiartek litra?`, 2 * x + y, hint + ' Pół litra to 2 ćwiartki.', `${x} × 2 = ${2 * x} ćwiartek, plus ${y} = ${2 * x + y} ćwiartek.`, 'ćwiartek'); }
+  const a = rnd(1, 3); return num(`W dzbanku jest 1 litr. Wylano ${a} ćwiartki litra. Ile ćwiartek litra zostało?`.replace('1 ćwiartki', '1 ćwiartkę'), 4 - a, hint, `1 litr to 4 ćwiartki, 4 − ${a} = ${4 - a}.`, 'ćwiartek');
+}
+
+function genMass() {
+  const t = rnd(1, 7);
+  const hint = '1 kg = 100 dag = 1000 g, a 1 dag = 10 g.';
+  if (t === 1) { const n = rnd(1, 9); return num(`${n} kg = ? dag`, n * 100, hint, `1 kg to 100 dag, więc ${n} × 100 = ${n * 100}.`, 'dag'); }
+  if (t === 2) { const n = rnd(1, 5); return num(`${n} kg = ? g`, n * 1000, hint, `1 kg to 1000 g, więc ${n} × 1000 = ${n * 1000}.`, 'g'); }
+  if (t === 3) { const n = rnd(2, 99); return num(`${n} dag = ? g`, n * 10, hint, `1 dag to 10 g, więc ${n} × 10 = ${n * 10}.`, 'g'); }
+  if (t === 4) { const n = rnd(2, 90) * 10; return num(`${n} g = ? dag`, n / 10, hint, `10 g to 1 dag, więc ${n} : 10 = ${n / 10}.`, 'dag'); }
+  if (t === 5) {
+    const o = pick([['pół kilograma', 'dag', 50, 'Pół kg to 100 : 2 = 50 dag.'], ['pół kilograma', 'g', 500, 'Pół kg to 1000 : 2 = 500 g.'],
+                    ['ćwierć kilograma', 'dag', 25, 'Ćwierć kg to 100 : 4 = 25 dag.'], ['ćwierć kilograma', 'g', 250, 'Ćwierć kg to 1000 : 4 = 250 g.']]);
+    return num(`${o[0]} to ile ${o[1] === 'dag' ? 'dekagramów' : 'gramów'}?`, o[2], hint, o[3], o[1]);
+  }
+  if (t === 6) { const a = rnd(1, 5), b = rnd(1, 9) * 10; return num(`${a} kg ${b} dag = ? dag`, a * 100 + b, hint, `${a} kg = ${a * 100} dag, plus ${b} dag = ${a * 100 + b} dag.`, 'dag'); }
+  const x = rnd(1, 9) * 10 + rnd(0, 1) * 5; return num(`Ile dekagramów brakuje do 1 kg, jeśli mamy ${x} dag?`, 100 - x, hint, `1 kg = 100 dag, więc 100 − ${x} = ${100 - x} dag.`, 'dag');
+}
+
+function genPlace() {
+  const t = rnd(1, 5);
+  const h = rnd(1, 9), d = rnd(1, 9), u = rnd(1, 9), n = h * 100 + d * 10 + u;
+  const hint = 'Pierwsza cyfra to setki, druga to dziesiątki, trzecia to jedności.';
+  if (t === 1) return num(`Ile setek ma liczba ${n}?`, h, hint, `W liczbie ${n} cyfra setek to ${h}, czyli ${h} setek.`);
+  if (t === 2) return num(`${h} setek, ${d} dziesiątek i ${u} jedności to liczba…`, n, hint, `${h * 100} + ${d * 10} + ${u} = ${n}.`);
+  if (t === 3) {
+    const pos = rnd(0, 2), digit = [h, d, u][pos], val = digit * [100, 10, 1][pos];
+    return num(`Jaką wartość ma cyfra ${digit} w liczbie ${n}? (Cyfra stoi na ${['miejscu setek', 'miejscu dziesiątek', 'miejscu jedności'][pos]}.)`, val, hint,
+      `Na miejscu ${['setek', 'dziesiątek', 'jedności'][pos]} cyfra ${digit} oznacza ${val}.`);
+  }
+  if (t === 4) return num(`${n} = ${h * 100} + ? + ${u}`, d * 10, hint, `${n} − ${h * 100} − ${u} = ${d * 10}. To ${d} dziesiątek.`);
+  const m = rnd(11, 99) * 10;
+  return num(`Ile pełnych dziesiątek jest w liczbie ${m}?`, m / 10, '1 dziesiątka to 10. Ile razy 10 mieści się w tej liczbie?', `${m} : 10 = ${m / 10} dziesiątek.`);
+}
+
+function genWords() {
+  const n = Math.random() < 0.05 ? 1000 : rnd(11, 999);
+  const w = toWords(n);
+  const parts = [];
+  if (n >= 100 && n < 1000) parts.push(`${Math.floor(n / 100) * 100} (${HUNDREDS[Math.floor(n / 100)]})`);
+  if (n % 100) parts.push(`${n % 100} (${toWords(n % 100)})`);
+  const explain = n === 1000 ? '1000 to tysiąc.' : `${n} = ${parts.join(' + ')}. Razem: ${w}.`;
+  if (Math.random() < 0.65) {
+    return { html: `Zapisz słownie liczbę: <b>${n}</b>`, type: 'text', answer: w, show: w, unit: '',
+      hint: 'Zapisuj od najwyższego miejsca: setki, potem dziesiątki, potem jedności. Liczby 11–19 mają swoje nazwy.', explain };
+  }
+  return { html: `Zapisz cyframi liczbę: <b>${w}</b>`, type: 'num', answer: n, show: String(n), unit: '',
+    hint: 'Zapisz osobno setki, dziesiątki i jedności, a potem je połącz.', explain };
+}
+
+const TOPICS = [
+  { id: 'mult', name: '✖ Mnożenie', gen: genMult },
+  { id: 'div', name: '➗ Dzielenie', gen: genDiv },
+  { id: 'as100', name: '➕ Dodawanie i odejmowanie do 100', gen: genAS100 },
+  { id: 'as1000', name: '💯 Setkami do 1000', gen: genAS1000 },
+  { id: 'word', name: '📝 Zadania tekstowe', gen: genWord },
+  { id: 'clock', name: '🕒 Zegar', gen: genClock },
+  { id: 'vol', name: '🥛 Litry i ćwiartki', gen: genVolume },
+  { id: 'mass', name: '⚖ Masa (kg, dag, g)', gen: genMass },
+  { id: 'place', name: '🔢 Setki, dziesiątki, jedności', gen: genPlace },
+  { id: 'words', name: '🔤 Liczby słownie', gen: genWords },
+];
+
+// ---------- stan i zapis ----------
+const KEY = 'mat3_v1';
+let state = JSON.parse(localStorage.getItem(KEY) || 'null') || { stats: {}, stars: 0 };
+const save = () => localStorage.setItem(KEY, JSON.stringify(state));
+let active = new Set(TOPICS.map(t => t.id));
+let session = { ok: 0, all: 0, streak: 0 };
+let cur = null, answered = false;
+
+const $ = id => document.getElementById(id);
+
+function renderChips() {
+  $('chips').innerHTML = '';
+  TOPICS.forEach(t => {
+    const b = document.createElement('button');
+    b.className = 'chip' + (active.has(t.id) ? ' on' : '');
+    b.textContent = t.name;
+    b.onclick = () => {
+      if (active.has(t.id)) { if (active.size > 1) active.delete(t.id); } else active.add(t.id);
+      renderChips(); nextQuestion();
+    };
+    $('chips').appendChild(b);
+  });
+}
+
+function renderScore() {
+  $('sOk').textContent = session.ok;
+  $('sAll').textContent = session.all;
+  $('sStreak').textContent = session.streak;
+  $('sStars').textContent = state.stars;
+}
+
+function renderStats() {
+  $('stats').innerHTML = TOPICS.map(t => {
+    const s = state.stats[t.id] || { ok: 0, bad: 0 };
+    const tot = s.ok + s.bad, pct = tot ? Math.round(100 * s.ok / tot) : 0;
+    return `<p style="margin:8px 0 2px">${t.name}: <b>${s.ok}/${tot}</b> (${tot ? pct + '%' : 'brak danych'})</p><div class="bar"><div style="width:${pct}%"></div></div>`;
+  }).join('');
+}
+
+function pickTopic() {
+  const list = TOPICS.filter(t => active.has(t.id));
+  const w = list.map(t => { const s = state.stats[t.id] || { ok: 0, bad: 0 }; return 1 + 3 * s.bad / (s.ok + s.bad + 2); });
+  let r = Math.random() * w.reduce((a, b) => a + b, 0);
+  for (let i = 0; i < list.length; i++) { r -= w[i]; if (r <= 0) return list[i]; }
+  return list[list.length - 1];
+}
+
+function nextQuestion() {
+  const t = pickTopic();
+  cur = t.gen(); cur.topic = t; answered = false;
+  $('qTopic').textContent = t.name;
+  $('qSvg').innerHTML = cur.svg || '';
+  $('qText').innerHTML = cur.html;
+  $('unit').textContent = cur.unit || '';
+  $('ans').value = ''; $('ans').disabled = false; $('ans').focus();
+  $('fb').className = 'fb'; $('fb').innerHTML = '';
+  $('hint').style.display = 'none';
+  $('btnCheck').style.display = ''; $('btnHint').style.display = ''; $('btnNext').style.display = 'none';
+}
+
+function isCorrect(input) {
+  if (cur.type === 'num') {
+    const v = Number(input.replace(',', '.').replace(/\s/g, ''));
+    return input.trim() !== '' && v === cur.answer;
+  }
+  if (cur.type === 'text') return norm(input) === norm(cur.answer);
+  const m = input.trim().match(/^(\d{1,2})\s*[:.,\-]?\s*(\d{2})$/) || input.trim().match(/^(\d{1,2})$/);
+  if (!m) return false;
+  const h = Number(m[1]), mi = m[2] ? Number(m[2]) : 0;
+  return mi < 60 && (h % 12) === (cur.answer.h % 12) && mi === cur.answer.m;
+}
+
+function check() {
+  if (answered) return;
+  const input = $('ans').value;
+  if (!input.trim()) { $('ans').focus(); return; }
+  answered = true;
+  const ok = isCorrect(input);
+  const id = cur.topic.id;
+  state.stats[id] = state.stats[id] || { ok: 0, bad: 0 };
+  session.all++;
+  if (ok) {
+    state.stats[id].ok++; session.ok++; session.streak++;
+    if (session.streak % 5 === 0) state.stars++;
+    $('fb').className = 'fb ok';
+    $('fb').innerHTML = `✅ ${pick(['Brawo!', 'Świetnie!', 'Super!', 'Dokładnie tak!'])}` +
+      (session.streak % 5 === 0 ? ' ⭐ Nowa gwiazdka za 5 dobrych z rzędu!' : '');
+  } else {
+    state.stats[id].bad++; session.streak = 0;
+    $('fb').className = 'fb bad';
+    $('fb').innerHTML = `❌ Nie tym razem. Poprawna odpowiedź: <b>${cur.show}</b><br>👉 ${cur.explain}`;
+  }
+  save(); renderScore(); renderStats();
+  $('ans').disabled = true;
+  $('btnCheck').style.display = 'none'; $('btnHint').style.display = 'none'; $('btnNext').style.display = '';
+  $('btnNext').focus();
+}
+
+$('btnCheck').onclick = check;
+$('btnNext').onclick = nextQuestion;
+$('btnHint').onclick = () => { $('hint').innerHTML = '💡 ' + cur.hint; $('hint').style.display = 'block'; };
+$('btnReset').onclick = () => {
+  if (confirm('Na pewno wyczyścić wyniki i gwiazdki?')) { state = { stats: {}, stars: 0 }; save(); renderStats(); renderScore(); }
+};
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter') { answered ? nextQuestion() : check(); }
+});
+
+renderChips(); renderScore(); renderStats(); nextQuestion();
+</script>
+</body>
+</html>
