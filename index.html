@@ -200,22 +200,22 @@ function genAS100() {
   return num(`${a} − ${b} = ?`, a - b, `Odejmij osobno dziesiątki, potem jedności.`,
     bo ? `${a} − ${bt} = ${a - bt}, potem ${a - bt} − ${bo} = ${a - b}.` : `${a} − ${bt} = ${a - b}.`);
 }
+
 function genAS1000() {
-  const add = Math.random() < 0.5;
-  const mixed = Math.random() < 0.4;
-  if (add) {
-    const a = mixed ? rnd(101, 799) : rnd(1, 8) * 100;
-    const b = rnd(1, Math.floor((1000 - a) / 100)) * 100;
-    return num(`${a} + ${b} = ?`, a + b, `Dodajemy same setki: ${b / 100} setki do cyfry setek.`,
-      mixed ? `Zmieniają się tylko setki: ${Math.floor(a / 100)} setek + ${b / 100} setek = ${Math.floor(a / 100) + b / 100} setek, reszta zostaje. Wynik: ${a + b}.`
-            : `${a / 100} setek + ${b / 100} setek = ${(a + b) / 100} setek = ${a + b}.`);
+  if (Math.random() < 0.5) {
+    // dodawanie: suma nie większa niż 1000
+    const a = rnd(1, 9) * 100;
+    const b = rnd(1, (1000 - a) / 100) * 100;
+    return num(`${a} + ${b} = ?`, a + b,
+      `Policz setkami: ${a / 100} setki i ${b / 100} setki. Ile to razem setek?`,
+      `${a / 100} setek + ${b / 100} setek = ${(a + b) / 100} setek, czyli ${a + b}.`);
   }
-  const a = mixed ? rnd(301, 999) : rnd(2, 10) * 100;
-  const b = rnd(1, Math.floor((a - (mixed ? 1 : 0)) / 100)) * 100;
-  const A = mixed ? a : a;
-  return num(`${A} − ${b} = ?`, A - b, `Odejmujemy same setki.`,
-    mixed ? `Odejmujemy ${b / 100} setek od ${Math.floor(A / 100)} setek, reszta zostaje. Wynik: ${A - b}.`
-          : `${A / 100} setek − ${b / 100} setek = ${(A - b) / 100} setek = ${A - b}.`);
+  // odejmowanie: odjemnik mniejszy od odjemnej
+  const a = rnd(2, 10) * 100;
+  const b = rnd(1, a / 100 - 1) * 100;
+  return num(`${a} − ${b} = ?`, a - b,
+    `Policz setkami: z ${a / 100} setek zabierz ${b / 100} setek. Ile setek zostanie?`,
+    `${a / 100} setek − ${b / 100} setek = ${(a - b) / 100} setek, czyli ${a - b}.`);
 }
 
 const NAMES = ['Ania', 'Kasia', 'Zosia', 'Tomek', 'Olek', 'Maja', 'Staś', 'Lena'];
