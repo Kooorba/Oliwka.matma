@@ -24,9 +24,15 @@
   button{font-size:17px;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;background:var(--main);color:#fff}
   button.sec{background:#e5e9fb;color:var(--dark)}
   button:disabled{opacity:.5;cursor:default}
-  .fb{margin-top:12px;padding:12px;border-radius:10px;display:none;font-size:17px;line-height:1.5}
-  .fb.ok{background:#e4f7ec;display:block}
-  .fb.bad{background:#fde8e8;display:block}
+  
+.fb{margin-top:12px;padding:14px;border-radius:12px;display:none;font-size:17px;line-height:1.5}
+.fb .big{font-size:30px;font-weight:bold;margin-bottom:6px}
+.fb.ok{background:#d7f5e3;border:3px solid var(--ok);color:#14663a;display:block}
+.fb.bad{background:#fde0e0;border:3px solid var(--bad);color:#8f1f1f;display:block}
+input[type=text].ok{border-color:var(--ok);background:#d7f5e3}
+input[type=text].bad{border-color:var(--bad);background:#fde0e0;animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-5px)}}
+
   .hint{margin-top:10px;background:#fff8dc;padding:10px;border-radius:10px;display:none}
   .bar{background:#e5e9fb;border-radius:6px;height:10px;overflow:hidden}
   .bar div{background:var(--ok);height:100%}
@@ -413,7 +419,9 @@ function nextQuestion() {
   $('qSvg').innerHTML = cur.svg || '';
   $('qText').innerHTML = cur.html;
   $('unit').textContent = cur.unit || '';
-  $('ans').value = ''; $('ans').disabled = false; $('ans').focus();
+  
+$('ans').value = ''; $('ans').className = ''; $('ans').disabled = false; $('ans').focus();
+
   $('fb').className = 'fb'; $('fb').innerHTML = '';
   $('hint').style.display = 'none';
   $('btnCheck').style.display = ''; $('btnHint').style.display = ''; $('btnNext').style.display = 'none';
@@ -431,6 +439,38 @@ function isCorrect(input) {
   return mi < 60 && (h % 12) === (cur.answer.h % 12) && mi === cur.answer.m;
 }
 
+
+const SOUND = true; // zmień na false, jeśli dźwięk ma być wyłączony
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function beep(ok) {
+  if (!SOUND) return;
+  try {
+    const c = new (window.AudioContext || window.webkitAudioContext)();
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = ok ? 'sine' : 'square';
+    o.frequency.value = ok ? 880 : 200;
+    g.gain.value = 0.1;
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(c.currentTime + (ok ? 0.15 : 0.3));
+  } catch (e) {}
+}
+
+
+const SOUND = true; // zmień na false, jeśli dźwięk ma być wyłączony
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function beep(ok) {
+  if (!SOUND) return;
+  try {
+    const c = new (window.AudioContext || window.webkitAudioContext)();
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = ok ? 'sine' : 'square';
+    o.frequency.value = ok ? 880 : 200;
+    g.gain.value = 0.1;
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(c.currentTime + (ok ? 0.15 : 0.3));
+  } catch (e) {}
+}
+
 function check() {
   if (answered) return;
   const input = $('ans').value;
@@ -442,15 +482,28 @@ function check() {
   session.all++;
   if (ok) {
     state.stats[id].ok++; session.ok++; session.streak++;
-    if (session.streak % 5 === 0) state.stars++;
+    const star = session.streak % 5 === 0;
+    if (star) state.stars++;
+    $('ans').className = 'ok';
     $('fb').className = 'fb ok';
-    $('fb').innerHTML = `✅ ${pick(['Brawo!', 'Świetnie!', 'Super!', 'Dokładnie tak!'])}` +
-      (session.streak % 5 === 0 ? ' ⭐ Nowa gwiazdka za 5 dobrych z rzędu!' : '');
+    $('fb').innerHTML = `<div class="big">✅ DOBRZE!</div>${pick(['Brawo!', 'Świetnie!', 'Super!', 'Dokładnie tak!'])}` +
+      (star ? '<br>⭐ Nowa gwiazdka za 5 dobrych odpowiedzi z rzędu!' : '');
   } else {
     state.stats[id].bad++; session.streak = 0;
+    $('ans').className = 'bad';
     $('fb').className = 'fb bad';
-    $('fb').innerHTML = `❌ Nie tym razem. Poprawna odpowiedź: <b>${cur.show}</b><br>👉 ${cur.explain}`;
+    $('fb').innerHTML = `<div class="big">❌ BŁĄD</div>` +
+      `Twoja odpowiedź: <b>${esc(input)}</b><br>` +
+      `Poprawna odpowiedź: <b>${cur.show}</b><br>👉 ${cur.explain}`;
   }
+  beep(ok);
+  save(); renderScore(); renderStats();
+  $('ans').disabled = true;
+  $('btnCheck').style.display = 'none'; $('btnHint').style.display = 'none'; $('btnNext').style.display = '';
+  $('fb').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  $('btnNext').focus();
+}
+
   save(); renderScore(); renderStats();
   $('ans').disabled = true;
   $('btnCheck').style.display = 'none'; $('btnHint').style.display = 'none'; $('btnNext').style.display = '';
