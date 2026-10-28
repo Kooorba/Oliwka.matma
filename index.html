@@ -4,27 +4,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Matematyka – klasa 3</title>
+<title>Nauka – klasa 3</title>
 <style>
-  :root{--main:#4a74f3;--dark:#2649b2;--ok:#1f9d55;--bad:#d64545;--bg:#f3f5ff}
-  *{box-sizing:border-box}
-  body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);margin:0;padding:12px;color:#222}
-  .wrap{max-width:680px;margin:0 auto}
-  h1{color:var(--dark);text-align:center;margin:8px 0}
-  .card{background:#fff;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-  .chips{display:flex;flex-wrap:wrap;gap:6px}
-  .chip{border:2px solid var(--main);background:#fff;color:var(--dark);border-radius:20px;padding:6px 10px;cursor:pointer;font-size:14px}
-  .chip.on{background:var(--main);color:#fff}
-  .score{display:flex;justify-content:space-around;text-align:center;font-size:15px}
-  .score b{font-size:22px;display:block;color:var(--dark)}
-  .topic{font-size:13px;color:#667;margin-bottom:6px}
-  .question{font-size:22px;line-height:1.4;margin:8px 0 12px}
-  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  input[type=text]{font-size:22px;padding:8px 12px;border:2px solid #bbc;border-radius:10px;width:220px}
-  button{font-size:17px;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;background:var(--main);color:#fff}
-  button.sec{background:#e5e9fb;color:var(--dark)}
-  button:disabled{opacity:.5;cursor:default}
-  
+:root{--main:#4a74f3;--dark:#2649b2;--ok:#1f9d55;--bad:#d64545;--bg:#f3f5ff}
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);margin:0;padding:12px;color:#222}
+.wrap{max-width:700px;margin:0 auto}
+h1{color:var(--dark);text-align:center;margin:8px 0}
+.card{background:#fff;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:2px solid var(--main);background:#fff;color:var(--dark);border-radius:20px;padding:6px 10px;cursor:pointer;font-size:14px}
+.chip.on{background:var(--main);color:#fff}
+.tabs{display:flex;gap:8px}
+.tab{flex:1;font-size:19px;padding:12px;background:#e5e9fb;color:var(--dark);border-radius:12px}
+.tab.on{background:var(--dark);color:#fff}
+.score{display:flex;justify-content:space-around;text-align:center;font-size:15px}
+.score b{font-size:22px;display:block;color:var(--dark)}
+.topic{font-size:13px;color:#667;margin-bottom:6px}
+.question{font-size:22px;line-height:1.4;margin:8px 0 12px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+input[type=text]{font-size:22px;padding:8px 12px;border:2px solid #bbc;border-radius:10px;width:240px}
+button{font-size:17px;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;background:var(--main);color:#fff}
+button.sec{background:#e5e9fb;color:var(--dark)}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;background:#fff;color:#222;border:2px solid var(--main);font-size:20px}
+.opt.sel{background:#dfe7ff}
+.opt.right{background:#d7f5e3;border-color:var(--ok)}
+.opt.wrong{background:#fde0e0;border-color:var(--bad)}
 .fb{margin-top:12px;padding:14px;border-radius:12px;display:none;font-size:17px;line-height:1.5}
 .fb .big{font-size:30px;font-weight:bold;margin-bottom:6px}
 .fb.ok{background:#d7f5e3;border:3px solid var(--ok);color:#14663a;display:block}
@@ -32,481 +37,459 @@
 input[type=text].ok{border-color:var(--ok);background:#d7f5e3}
 input[type=text].bad{border-color:var(--bad);background:#fde0e0;animation:shake .4s}
 @keyframes shake{25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-5px)}}
-
-  .hint{margin-top:10px;background:#fff8dc;padding:10px;border-radius:10px;display:none}
-  .bar{background:#e5e9fb;border-radius:6px;height:10px;overflow:hidden}
-  .bar div{background:var(--ok);height:100%}
-  table{border-collapse:collapse;margin:6px 0}
-  td,th{border:1px solid #ccd;padding:4px 10px;text-align:center}
-  summary{cursor:pointer;font-weight:bold;color:var(--dark)}
-  svg{display:block;margin:0 auto 10px}
+.hint{margin-top:10px;background:#fff8dc;padding:10px;border-radius:10px;display:none}
+.bar{background:#e5e9fb;border-radius:6px;height:10px;overflow:hidden}
+.bar div{background:var(--ok);height:100%}
+table{border-collapse:collapse;margin:6px 0}
+td,th{border:1px solid #ccd;padding:4px 10px;text-align:center}
+summary{cursor:pointer;font-weight:bold;color:var(--dark)}
+svg{display:block;margin:0 auto 10px}
+.mis{border-left:5px solid var(--bad);background:#fff5f5;padding:8px 10px;margin:8px 0;border-radius:6px}
+.hide{display:none}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>🧮 Matematyka – klasa 3</h1>
+<h1>📚 Nauka – klasa 3</h1>
 
-  <div class="card">
-    <div class="topic">Wybierz, co chcesz ćwiczyć (kliknij, aby włączyć lub wyłączyć):</div>
-    <div class="chips" id="chips"></div>
+<div class="card">
+  <div class="tabs">
+    <button class="tab on" id="tabMat">➕ Matematyka</button>
+    <button class="tab" id="tabPol">📖 Polski</button>
   </div>
+  <div class="tabs" style="margin-top:8px">
+    <button class="tab on" id="modePr">Ćwiczenia</button>
+    <button class="tab" id="modeTe">Sprawdzian (15 pytań)</button>
+  </div>
+</div>
 
-  <div class="card score">
-    <div><b id="sOk">0</b>dobrze</div>
-    <div><b id="sAll">0</b>zadań</div>
-    <div><b id="sStreak">0</b>🔥 seria</div>
-    <div><b id="sStars">0</b>⭐ gwiazdki</div>
-  </div>
+<div class="card">
+  <div class="topic">Wybierz, co chcesz ćwiczyć (kliknij, aby włączyć lub wyłączyć):</div>
+  <div class="chips" id="chips"></div>
+</div>
 
-  <div class="card">
-    <div class="topic" id="qTopic"></div>
-    <div id="qSvg"></div>
-    <div class="question" id="qText"></div>
-    <div class="row">
-      <input type="text" id="ans" autocomplete="off" autocapitalize="off">
-      <span id="unit"></span>
-    </div>
-    <div class="row" style="margin-top:12px">
-      <button id="btnCheck">Sprawdź</button>
-      <button class="sec" id="btnHint">💡 Podpowiedź</button>
-      <button class="sec" id="btnNext" style="display:none">Dalej ➜</button>
-    </div>
-    <div class="hint" id="hint"></div>
-    <div class="fb" id="fb"></div>
-  </div>
+<div class="card score" id="scoreBox">
+  <div><b id="sOk">0</b>dobrze</div>
+  <div><b id="sAll">0</b>zadań</div>
+  <div><b id="sStreak">0</b>🔥 seria</div>
+  <div><b id="sStars">0</b>⭐ gwiazdki</div>
+</div>
 
-  <div class="card">
-    <details>
-      <summary>📖 Ściąga: miary i zegar</summary>
-      <p><b>Objętość (litry)</b></p>
-      <table>
-        <tr><td>1 l</td><td>= 2 × pół litra (½ l)</td></tr>
-        <tr><td>1 l</td><td>= 4 × ćwierć litra (¼ l)</td></tr>
-        <tr><td>pół litra</td><td>= 2 × ćwierć litra</td></tr>
-      </table>
-      <p><b>Masa</b></p>
-      <table>
-        <tr><td>1 kg</td><td>= 100 dag</td><td>= 1000 g</td></tr>
-        <tr><td>1 dag</td><td>= 10 g</td><td></td></tr>
-        <tr><td>pół kg</td><td>= 50 dag</td><td>= 500 g</td></tr>
-        <tr><td>ćwierć kg</td><td>= 25 dag</td><td>= 250 g</td></tr>
-      </table>
-      <p><b>Czas</b></p>
-      <table>
-        <tr><td>1 godzina</td><td>= 60 minut</td></tr>
-        <tr><td>kwadrans</td><td>= 15 minut</td></tr>
-        <tr><td>pół godziny</td><td>= 30 minut</td></tr>
-      </table>
-      <p><b>Układ dziesiątkowy:</b> 1 setka = 10 dziesiątek = 100 jedności.</p>
-    </details>
+<div class="card" id="qCard">
+  <div class="topic" id="qTopic"></div>
+  <div id="qSvg"></div>
+  <div class="question" id="qText"></div>
+  <div id="opts"></div>
+  <div class="row" id="inRow">
+    <input type="text" id="ans" autocomplete="off" autocapitalize="off">
+    <span id="unit"></span>
   </div>
+  <div class="row" style="margin-top:12px">
+    <button id="btnCheck">Sprawdź</button>
+    <button class="sec" id="btnHint">💡 Podpowiedź</button>
+    <button class="sec" id="btnNext" style="display:none">Dalej ➜</button>
+  </div>
+  <div class="hint" id="hint"></div>
+  <div class="fb" id="fb"></div>
+</div>
 
-  <div class="card">
-    <details>
-      <summary>📊 Moje wyniki (w czym jestem dobra, co ćwiczyć)</summary>
-      <div id="stats"></div>
-      <p><button class="sec" id="btnReset">Wyczyść wyniki</button></p>
-      <small>Strona częściej losuje zadania z tych działów, w których pojawia się więcej błędów.</small>
-    </details>
-  </div>
+<div class="card hide" id="resCard"></div>
+
+<div class="card" id="cheatMat">
+<details><summary>📏 Ściąga: miary i zegar</summary>
+<p><b>Objętość (litry)</b></p>
+<table><tr><td>1 l</td><td>= 2 × pół litra (½ l)</td></tr><tr><td>1 l</td><td>= 4 × ćwierć litra (¼ l)</td></tr><tr><td>pół litra</td><td>= 2 × ćwierć litra</td></tr></table>
+<p><b>Masa</b></p>
+<table><tr><td>1 kg</td><td>= 100 dag</td><td>= 1000 g</td></tr><tr><td>1 dag</td><td>= 10 g</td><td></td></tr><tr><td>pół kg</td><td>= 50 dag</td><td>= 500 g</td></tr><tr><td>ćwierć kg</td><td>= 25 dag</td><td>= 250 g</td></tr></table>
+<p><b>Czas</b></p>
+<table><tr><td>1 godzina</td><td>= 60 minut</td></tr><tr><td>kwadrans</td><td>= 15 minut</td></tr><tr><td>pół godziny</td><td>= 30 minut</td></tr></table>
+<p><b>Układ dziesiątkowy:</b> 1 setka = 10 dziesiątek = 100 jedności.</p>
+</details>
+</div>
+
+<div class="card hide" id="cheatPol">
+<details open><summary>📖 Ściąga: zasady (ze zdjęć z zeszytu)</summary>
+<p><b>Alfabet:</b> 32 litery: A Ą B C Ć D E Ę F G H I J K L Ł M N Ń O Ó P R S Ś T U W Y Z Ź Ż</p>
+<p><b>Czasowniki</b> to nazwy czynności i stanów. Pytania: <i>co robi? co się z nim dzieje?</i> (uczy się, choruje)</p>
+<p><b>Rzeczowniki</b> – kto? co? (rolnik, pole). <b>Przymiotniki</b> – jaki? jaka? jakie? (zapracowany, jesienne)</p>
+<p><b>NIE z czasownikami</b> piszemy oddzielnie: nie gram, nie lubię.</p>
+<p><b>RZ piszemy:</b> 1) gdy wymienia się na <b>r</b> (rower – rowerzysta) 2) po spółgłoskach <b>j, t, b, k, g, w, p, d, ch</b> (brzeg, wrzątek) 3) w nazwach zawodów <b>-arz, -erz</b> (lekarz). Wyjątki: pszenica, pszczoła, kształt.</p>
+<p><b>Ż piszemy,</b> gdy wymienia się na <b>g, z, s</b> (książka – księgi, bliżej – blisko). Wiele wyrazów trzeba zapamiętać: jeżyny, łyżka, duży, róża, też, także, gdyż, ponieważ, ostrożnie, różne.</p>
+<p><b>CH piszemy,</b> gdy wymienia się na <b>sz</b> (mucha – muszka) i gdy jest <b>na końcu wyrazu</b> (dach, ruch). Wyjątek: <b>druh</b> (piszemy przez h).</p>
+<p><b>Opowiadanie:</b> 1. Wstęp – od czego wszystko się zaczęło? 2. Rozwinięcie – co się wydarzyło później? 3. Zakończenie – jak to się skończyło?</p>
+<p><b>Zdanie pojedyncze</b> ma jeden czasownik. <b>Zdanie złożone</b> ma dwa lub więcej czasowników. <i>(dodane od nas, nie ze zdjęć)</i></p>
+<p><b>Opis liścia – lista kontrolna</b> <i>(przykładowa)</i>: jaki ma kształt? jaki kolor? jaki brzeg (gładki, ząbkowany)? jaki jest w dotyku? do czego jest podobny?</p>
+</details>
+</div>
+
+<div class="card">
+<details><summary>📊 Moje wyniki (w czym jestem dobra, co ćwiczyć)</summary>
+<div id="stats"></div>
+<p><button class="sec" id="btnReset">Wyczyść wyniki</button></p>
+<small>Strona częściej losuje działy, w których jest więcej błędów.</small>
+</details>
+</div>
 </div>
 
 <script>
 // ---------- pomocnicze ----------
-const rnd = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
-const pick = arr => arr[rnd(0, arr.length - 1)];
-const pad = n => String(n).padStart(2, '0');
-const norm = s => s.toLowerCase().replace(/ł/g, 'l').normalize('NFD')
-  .replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+const $=id=>document.getElementById(id);
+const rnd=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const pick=a=>a[rnd(0,a.length-1)];
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=rnd(0,i);[a[i],a[j]]=[a[j],a[i]];}return a;};
+const pad=n=>String(n).padStart(2,'0');
+const norm=s=>s.toLowerCase().replace(/ł/g,'l').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const SOUND=true; // false = bez dźwięku
+function beep(ok){
+  if(!SOUND)return;
+  try{
+    const c=new (window.AudioContext||window.webkitAudioContext)();
+    const o=c.createOscillator(),g=c.createGain();
+    o.type=ok?'sine':'square';o.frequency.value=ok?880:200;g.gain.value=0.1;
+    o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+(ok?0.15:0.3));
+  }catch(e){}
+}
+const num=(html,answer,hint,explain,unit='')=>({html,type:'num',answer,show:answer+(unit?' '+unit:''),hint,explain,unit});
+const choice=(html,answer,opts,hint,explain)=>({html,type:'choice',answer,show:answer,options:shuffle([...new Set([answer,...opts])]),hint,explain});
 
-// ---------- liczby słownie ----------
-const ONES = ['zero','jeden','dwa','trzy','cztery','pięć','sześć','siedem','osiem','dziewięć'];
-const TEENS = ['dziesięć','jedenaście','dwanaście','trzynaście','czternaście','piętnaście','szesnaście','siedemnaście','osiemnaście','dziewiętnaście'];
-const TENS = ['','','dwadzieścia','trzydzieści','czterdzieści','pięćdziesiąt','sześćdziesiąt','siedemdziesiąt','osiemdziesiąt','dziewięćdziesiąt'];
-const HUNDREDS = ['','sto','dwieście','trzysta','czterysta','pięćset','sześćset','siedemset','osiemset','dziewięćset'];
-function toWords(n) {
-  if (n === 1000) return 'tysiąc';
-  const parts = [];
-  const h = Math.floor(n / 100), rest = n % 100;
-  if (h) parts.push(HUNDREDS[h]);
-  if (rest >= 10 && rest < 20) parts.push(TEENS[rest - 10]);
-  else {
-    if (rest >= 20) parts.push(TENS[Math.floor(rest / 10)]);
-    if (rest % 10) parts.push(ONES[rest % 10]);
+// ---------- MATEMATYKA ----------
+const ONES=['zero','jeden','dwa','trzy','cztery','pięć','sześć','siedem','osiem','dziewięć'];
+const TEENS=['dziesięć','jedenaście','dwanaście','trzynaście','czternaście','piętnaście','szesnaście','siedemnaście','osiemnaście','dziewiętnaście'];
+const TENS=['','','dwadzieścia','trzydzieści','czterdzieści','pięćdziesiąt','sześćdziesiąt','siedemdziesiąt','osiemdziesiąt','dziewięćdziesiąt'];
+const HUNDREDS=['','sto','dwieście','trzysta','czterysta','pięćset','sześćset','siedemset','osiemset','dziewięćset'];
+function toWords(n){
+  if(n===1000)return 'tysiąc';
+  const p=[],h=Math.floor(n/100),r=n%100;
+  if(h)p.push(HUNDREDS[h]);
+  if(r>=10&&r<20)p.push(TEENS[r-10]);
+  else{if(r>=20)p.push(TENS[Math.floor(r/10)]);if(r%10)p.push(ONES[r%10]);}
+  return p.join(' ')||'zero';
+}
+function clockSvg(h,m){
+  const pt=(a,l)=>[100+l*Math.sin(a*Math.PI/180),100-l*Math.cos(a*Math.PI/180)];
+  let s='<svg width="200" height="200" viewBox="0 0 200 200"><circle cx="100" cy="100" r="95" fill="#fff" stroke="#2649b2" stroke-width="5"/>';
+  for(let i=0;i<60;i++){const big=i%5===0;const [x1,y1]=pt(i*6,big?82:88),[x2,y2]=pt(i*6,93);
+    s+=`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#333" stroke-width="${big?3:1}"/>`;}
+  for(let i=1;i<=12;i++){const [x,y]=pt(i*30,68);
+    s+=`<text x="${x}" y="${y+7}" font-size="20" text-anchor="middle" font-weight="bold" fill="#2649b2">${i}</text>`;}
+  const [hx,hy]=pt((h%12)*30+m*0.5,45),[mx,my]=pt(m*6,72);
+  s+=`<line x1="100" y1="100" x2="${hx}" y2="${hy}" stroke="#222" stroke-width="7" stroke-linecap="round"/>`;
+  s+=`<line x1="100" y1="100" x2="${mx}" y2="${my}" stroke="#d64545" stroke-width="4" stroke-linecap="round"/>`;
+  return s+'<circle cx="100" cy="100" r="5" fill="#222"/></svg>';
+}
+const fmtTime=(h,m)=>`${h}:${pad(m)}`;
+function addMinutes(h,m,d){const t=h*60+m+d;let hh=Math.floor(t/60)%12;if(hh===0)hh=12;return{h:hh,m:t%60};}
+
+function genMult(){
+  const a=rnd(2,10),b=rnd(2,10),p=a*b;
+  if(Math.random()<0.3)return num(`? × ${b} = ${p}`,a,`Ile razy ${b} daje ${p}? Licz skokami po ${b}.`,`${a} × ${b} = ${p}, więc brakuje liczby ${a}.`);
+  return num(`${a} × ${b} = ?`,p,`Licz skokami po ${a}: ${Array.from({length:Math.min(b,5)},(_,i)=>a*(i+1)).join(', ')}…`,`${a} × ${b} to ${b} razy po ${a}: ${Array(b).fill(a).join(' + ')} = ${p}.`);
+}
+function genDiv(){
+  const d=rnd(2,10),q=rnd(2,Math.floor(60/d)),n=d*q;
+  if(Math.random()<0.3)return num(`Podziel ${n} na ${d} równych części. Ile jest w jednej części?`,q,`Szukaj liczby, która razy ${d} da ${n}.`,`${n} : ${d} = ${q}, bo ${q} × ${d} = ${n}.`);
+  return num(`${n} : ${d} = ?`,q,`Ile razy ${d} mieści się w ${n}? Albo: ? × ${d} = ${n}.`,`${n} : ${d} = ${q}, bo ${q} × ${d} = ${n}. Dzielenie to odwrotność mnożenia.`);
+}
+function genAS100(){
+  if(Math.random()<0.5){
+    const a=rnd(11,90),b=rnd(5,100-a),bt=Math.floor(b/10)*10,bo=b%10;
+    return num(`${a} + ${b} = ?`,a+b,'Dodaj osobno dziesiątki, potem jedności.',bo?`${a} + ${bt} = ${a+bt}, potem ${a+bt} + ${bo} = ${a+b}.`:`${a} + ${bt} = ${a+b}.`);
   }
-  return parts.join(' ') || 'zero';
+  const a=rnd(21,100),b=rnd(5,a-1),bt=Math.floor(b/10)*10,bo=b%10;
+  return num(`${a} − ${b} = ?`,a-b,'Odejmij osobno dziesiątki, potem jedności.',bo?`${a} − ${bt} = ${a-bt}, potem ${a-bt} − ${bo} = ${a-b}.`:`${a} − ${bt} = ${a-b}.`);
+}
+function genAS1000(){
+  if(Math.random()<0.5){
+    const a=rnd(1,9)*100,b=rnd(1,(1000-a)/100)*100;
+    return num(`${a} + ${b} = ?`,a+b,`Licz setkami: ${a/100} setki i ${b/100} setki. Ile to razem setek?`,`${a/100} setek + ${b/100} setek = ${(a+b)/100} setek, czyli ${a+b}.`);
+  }
+  const a=rnd(2,10)*100,b=rnd(1,a/100-1)*100;
+  return num(`${a} − ${b} = ?`,a-b,`Licz setkami: z ${a/100} setek zabierz ${b/100} setek.`,`${a/100} setek − ${b/100} setek = ${(a-b)/100} setek, czyli ${a-b}.`);
+}
+const NAMES=['Ania','Kasia','Zosia','Tomek','Olek','Maja','Staś','Lena'];
+function genWord(){
+  const n=pick(NAMES),t=rnd(1,7);
+  if(t===1){const a=rnd(3,10),b=rnd(2,Math.floor(100/a));return num(`${n} układa ołówki w pudełkach. W jednym pudełku jest ${a} ołówków. Pudełek jest ${b}. Ile ołówków jest razem?`,a*b,'Kilka takich samych grup – mnożymy.',`${a} × ${b} = ${a*b}.`);}
+  if(t===2){const d=rnd(2,6),q=rnd(2,Math.floor(60/d)),s=d*q;return num(`${n} ma ${s} cukierków i dzieli je po równo między ${d} osób. Ile dostanie jedna osoba?`,q,'Dzielimy po równo – dzielimy.',`${s} : ${d} = ${q}, bo ${q} × ${d} = ${s}.`);}
+  if(t===3){const a=rnd(40,100),b=rnd(10,a-5);return num(`${n} miał(a) ${a} zł i kupił(a) książkę za ${b} zł. Ile złotych zostało?`,a-b,'Coś zostało – odejmujemy.',`${a} − ${b} = ${a-b} zł.`,'zł');}
+  if(t===4){const a=rnd(20,60),b=rnd(10,100-a);return num(`W sadzie rośnie ${a} jabłoni i ${b} grusz. Ile drzew jest w sadzie?`,a+b,'Łączymy dwie grupy – dodajemy.',`${a} + ${b} = ${a+b}.`);}
+  if(t===5){const a=rnd(30,60),b=rnd(10,a-5);return num(`${n} ma ${a} naklejek, a jej brat ${b}. O ile naklejek więcej ma ${n}?`,a-b,'„O ile więcej” to różnica – odejmujemy.',`${a} − ${b} = ${a-b}.`);}
+  if(t===6){const a=rnd(2,6),k=rnd(2,Math.min(8,Math.floor(60/a))),b=a*k;return num(`${n} ma ${a} cukierki, a Olek ${b}. Ile razy więcej cukierków ma Olek?`,k,'„Ile razy więcej” to dzielenie większej liczby przez mniejszą.',`${b} : ${a} = ${k}, bo ${k} × ${a} = ${b}.`);}
+  const kg=rnd(1,3),dag=rnd(1,9)*10;
+  return num(`${n} kupił(a) ${kg} kg jabłek i ${dag} dag gruszek. Ile dekagramów owoców to razem?`,kg*100+dag,'Zamień kilogramy na dekagramy (1 kg = 100 dag), potem dodaj.',`${kg} kg = ${kg*100} dag. ${kg*100} + ${dag} = ${kg*100+dag} dag.`,'dag');
+}
+function genClock(){
+  const t=rnd(1,5);
+  if(t<=2){const h=rnd(1,12),m=Math.random()<0.7?rnd(0,11)*5:rnd(0,59);
+    return{html:'Która godzina jest na zegarze? Wpisz np. 3:15',type:'time',answer:{h,m},show:fmtTime(h,m),svg:clockSvg(h,m),
+      hint:'Krótka, gruba wskazówka pokazuje godziny. Długa, czerwona – minuty. Każda duża cyfra to 5 minut (przy 3 jest 15 minut).',
+      explain:`Krótka wskazówka jest przy ${h}, długa pokazuje ${m} minut. Jest ${fmtTime(h,m)}.`};}
+  if(t===3){const h=rnd(1,12),m=rnd(0,11)*5,d=rnd(3,18)*5,r=addMinutes(h,m,d);
+    return{html:`Lekcja zaczyna się o ${fmtTime(h,m)} i trwa ${d} minut. O której się kończy? Wpisz np. 9:05`,type:'time',answer:r,show:fmtTime(r.h,r.m),
+      hint:'Gdy minut jest 60, zaczyna się następna godzina.',explain:`${fmtTime(h,m)} + ${d} min = ${fmtTime(r.h,r.m)}.`};}
+  if(t===4){const h=rnd(1,10),m=rnd(0,11)*5,d=rnd(4,22)*5,r=addMinutes(h,m,d);
+    return num(`Film zaczął się o ${fmtTime(h,m)}, a skończył o ${fmtTime(r.h,r.m)}. Ile minut trwał?`,d,'Policz do pełnej godziny, a potem resztę minut.',`Od ${fmtTime(h,m)} do ${fmtTime(r.h,r.m)} mija ${d} minut.`,'min');}
+  if(Math.random()<0.5){const h=rnd(1,4);return num(`Ile minut ma ${h===1?'1 godzina':h+' godziny'}?`,h*60,'1 godzina = 60 minut.',`${h} × 60 = ${h*60} minut.`,'min');}
+  const h=rnd(2,4);return num(`${h*60} minut to ile godzin?`,h,'1 godzina = 60 minut.',`${h*60} : 60 = ${h}.`,'godz.');
+}
+function genVolume(){
+  const t=rnd(1,6),hint='1 litr = 2 × pół litra = 4 × ćwierć litra.';
+  if(t===1){const n=rnd(1,5);return num(`Ile ćwiartek litra (¼ l) jest w ${n} l?`,n*4,hint,`W 1 litrze są 4 ćwiartki: ${n} × 4 = ${n*4}.`,'ćwiartek');}
+  if(t===2){const n=rnd(2,8);return num(`Ile półlitrowych szklanek (½ l) napełnisz z ${n} l soku?`,n*2,hint,`W 1 litrze są 2 połówki: ${n} × 2 = ${n*2}.`,'szklanek');}
+  if(t===3){const k=rnd(2,6)*4;return num(`${k} ćwiartek litra to ile litrów?`,k/4,hint,`4 ćwiartki to 1 litr: ${k} : 4 = ${k/4}.`,'l');}
+  if(t===4){const k=rnd(2,8)*2;return num(`${k} półlitrowych butelek to ile litrów wody?`,k/2,hint,`2 połówki to 1 litr: ${k} : 2 = ${k/2}.`,'l');}
+  if(t===5){const x=rnd(1,3),y=rnd(1,3);return num(`Nalano ${x} razy pół litra i dolano ${y} razy ćwierć litra. Ile to razem ćwiartek litra?`,2*x+y,hint+' Pół litra to 2 ćwiartki.',`${x} × 2 = ${2*x} ćwiartek, plus ${y} = ${2*x+y}.`,'ćwiartek');}
+  const a=rnd(1,3);return num(`W dzbanku jest 1 litr. Wylano ${a} ${a===1?'ćwiartkę':'ćwiartki'} litra. Ile ćwiartek litra zostało?`,4-a,hint,`1 litr to 4 ćwiartki, 4 − ${a} = ${4-a}.`,'ćwiartek');
+}
+function genMass(){
+  const t=rnd(1,7),hint='1 kg = 100 dag = 1000 g, a 1 dag = 10 g.';
+  if(t===1){const n=rnd(1,9);return num(`${n} kg = ? dag`,n*100,hint,`${n} × 100 = ${n*100}.`,'dag');}
+  if(t===2){const n=rnd(1,5);return num(`${n} kg = ? g`,n*1000,hint,`${n} × 1000 = ${n*1000}.`,'g');}
+  if(t===3){const n=rnd(2,99);return num(`${n} dag = ? g`,n*10,hint,`${n} × 10 = ${n*10}.`,'g');}
+  if(t===4){const n=rnd(2,90)*10;return num(`${n} g = ? dag`,n/10,hint,`${n} : 10 = ${n/10}.`,'dag');}
+  if(t===5){const o=pick([['pół kilograma','dag',50,'Pół kg to 100 : 2 = 50 dag.'],['pół kilograma','g',500,'Pół kg to 1000 : 2 = 500 g.'],['ćwierć kilograma','dag',25,'Ćwierć kg to 100 : 4 = 25 dag.'],['ćwierć kilograma','g',250,'Ćwierć kg to 1000 : 4 = 250 g.']]);
+    return num(`${o[0]} to ile ${o[1]==='dag'?'dekagramów':'gramów'}?`,o[2],hint,o[3],o[1]);}
+  if(t===6){const a=rnd(1,5),b=rnd(1,9)*10;return num(`${a} kg ${b} dag = ? dag`,a*100+b,hint,`${a} kg = ${a*100} dag, plus ${b} dag = ${a*100+b} dag.`,'dag');}
+  const x=rnd(1,9)*10+rnd(0,1)*5;return num(`Ile dekagramów brakuje do 1 kg, jeśli mamy ${x} dag?`,100-x,hint,`100 − ${x} = ${100-x} dag.`,'dag');
+}
+function genPlace(){
+  const t=rnd(1,5),h=rnd(1,9),d=rnd(1,9),u=rnd(1,9),n=h*100+d*10+u;
+  const hint='Pierwsza cyfra to setki, druga to dziesiątki, trzecia to jedności.';
+  if(t===1)return num(`Ile setek ma liczba ${n}?`,h,hint,`W liczbie ${n} cyfra setek to ${h}.`);
+  if(t===2)return num(`${h} setek, ${d} dziesiątek i ${u} jedności to liczba…`,n,hint,`${h*100} + ${d*10} + ${u} = ${n}.`);
+  if(t===3){const pos=rnd(0,2),digit=[h,d,u][pos],val=digit*[100,10,1][pos];
+    return num(`Jaką wartość ma cyfra ${digit} w liczbie ${n}? (Stoi na ${['miejscu setek','miejscu dziesiątek','miejscu jedności'][pos]}.)`,val,hint,`Na miejscu ${['setek','dziesiątek','jedności'][pos]} cyfra ${digit} oznacza ${val}.`);}
+  if(t===4)return num(`${n} = ${h*100} + ? + ${u}`,d*10,hint,`${n} − ${h*100} − ${u} = ${d*10}.`);
+  const m=rnd(11,99)*10;return num(`Ile pełnych dziesiątek jest w liczbie ${m}?`,m/10,'1 dziesiątka to 10. Ile razy 10 mieści się w liczbie?',`${m} : 10 = ${m/10}.`);
+}
+function genWords(){
+  const n=Math.random()<0.05?1000:rnd(11,999),w=toWords(n);
+  const explain=n===1000?'1000 to tysiąc.':`${n} = ${n>=100?Math.floor(n/100)*100+' ('+HUNDREDS[Math.floor(n/100)]+')':''}${n>=100&&n%100?' + ':''}${n%100?(n%100)+' ('+toWords(n%100)+')':''}. Razem: ${w}.`;
+  if(Math.random()<0.65)return{html:`Zapisz słownie liczbę: <b>${n}</b>`,type:'text',answer:w,show:w,hint:'Zapisuj od najwyższego miejsca: setki, dziesiątki, jedności. Liczby 11–19 mają swoje nazwy.',explain};
+  return{html:`Zapisz cyframi liczbę: <b>${w}</b>`,type:'num',answer:n,show:String(n),unit:'',hint:'Zapisz osobno setki, dziesiątki i jedności, potem połącz.',explain};
 }
 
-// ---------- zegar (SVG) ----------
-function clockSvg(h, m) {
-  const cx = 100, cy = 100;
-  const pt = (angle, len) => [cx + len * Math.sin(angle * Math.PI / 180), cy - len * Math.cos(angle * Math.PI / 180)];
-  let s = '<svg width="200" height="200" viewBox="0 0 200 200"><circle cx="100" cy="100" r="95" fill="#fff" stroke="#2649b2" stroke-width="5"/>';
-  for (let i = 0; i < 60; i++) {
-    const a = i * 6, big = i % 5 === 0;
-    const [x1, y1] = pt(a, big ? 82 : 88), [x2, y2] = pt(a, 93);
-    s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#333" stroke-width="${big ? 3 : 1}"/>`;
+// ---------- POLSKI ----------
+const AL='A Ą B C Ć D E Ę F G H I J K L Ł M N Ń O Ó P R S Ś T U W Y Z Ź Ż'.split(' ');
+const ALl=AL.map(x=>x.toLowerCase());
+const wkey=w=>w.toLowerCase().split('').map(c=>ALl.indexOf(c));
+const wcmp=(a,b)=>{const x=wkey(a),y=wkey(b);for(let i=0;i<Math.min(x.length,y.length);i++)if(x[i]!==y[i])return x[i]-y[i];return x.length-y.length;};
+function genAlpha(){
+  const t=rnd(1,4);
+  if(t===1)return num('Ile liter ma polski alfabet?',32,'Policz litery w ramce „Alfabet” w zeszycie. Są też litery z ogonkami i kreskami: ą, ć, ę, ł, ń, ó, ś, ź, ż.','Polski alfabet składa się z 32 liter.');
+  if(t===2||t===3){
+    const after=t===2,i=after?rnd(0,30):rnd(1,31),ans=AL[after?i+1:i-1];
+    const o=shuffle(AL.filter(x=>x!==ans&&x!==AL[i])).slice(0,3);
+    return choice(`Jaka litera jest w alfabecie ${after?'zaraz <b>po</b>':'tuż <b>przed</b>'} literą <b>${AL[i]}</b>?`,ans,o,'Powiedz alfabet po cichu od początku: A, Ą, B, C, Ć…',`W alfabecie: …${AL[Math.max(0,(after?i:i-1)-1)]}, ${after?AL[i]+', <b>'+ans+'</b>':'<b>'+ans+'</b>, '+AL[i]}…`);
   }
-  for (let i = 1; i <= 12; i++) {
-    const [x, y] = pt(i * 30, 68);
-    s += `<text x="${x}" y="${y + 7}" font-size="20" text-anchor="middle" font-weight="bold" fill="#2649b2">${i}</text>`;
-  }
-  const [hx, hy] = pt((h % 12) * 30 + m * 0.5, 45);
-  const [mx, my] = pt(m * 6, 72);
-  s += `<line x1="100" y1="100" x2="${hx}" y2="${hy}" stroke="#222" stroke-width="7" stroke-linecap="round"/>`;
-  s += `<line x1="100" y1="100" x2="${mx}" y2="${my}" stroke="#d64545" stroke-width="4" stroke-linecap="round"/>`;
-  s += '<circle cx="100" cy="100" r="5" fill="#222"/></svg>';
-  return s;
+  const W=['Elbląg','Gdańsk','Gdynia','Malbork','Sopot','Hel','Ania','Basia','Kasia','Ola','Zosia','Tomek'];
+  const w=shuffle(W).slice(0,3),s=[...w].sort(wcmp);
+  return choice(`Które z tych słów będzie <b>pierwsze</b> w kolejności alfabetycznej?`,s[0],w,'Porównaj pierwsze litery. Jeśli są takie same – drugie litery.',`Kolejność: ${s.join(', ')}.`);
 }
-const fmtTime = (h, m) => `${h}:${pad(m)}`;
-function addMinutes(h, m, d) {
-  const t = h * 60 + m + d;
-  let hh = Math.floor(t / 60) % 12; if (hh === 0) hh = 12;
-  return { h: hh, m: t % 60 };
+const V=['sieje','orze','zbiera','sadzi','pracuje','choruje','gra','lubi','sprząta','pomaga','kończy','uczy się'];
+const N=['rolnik','pole','ziemia','kombajn','orka','chleb','mąka','bułka','kuchnia','zabawki','ogród','plecak'];
+const A=['zapracowany','jesienne','skoszone','kolorowe','ostre','biała','niebieski','przezroczysty','plastikowa','spakowany'];
+function genPOS(){
+  const T=[['czasownik',V,'Czasownik odpowiada na pytania: co robi? co się z nim dzieje?'],['rzeczownik',N,'Rzeczownik odpowiada na pytania: kto? co? (nazywa osoby, rzeczy, rośliny, zwierzęta).'],['przymiotnik',A,'Przymiotnik odpowiada na pytania: jaki? jaka? jakie?']];
+  const t=pick(T),ans=pick(t[1]);
+  const others=T.filter(x=>x!==t),o=[pick(others[0][1]),pick(others[1][1])];
+  const nom={czasownik:'czasownikiem',rzeczownik:'rzeczownikiem',przymiotnik:'przymiotnikiem'}[t[0]];
+  return choice(`Który wyraz jest <b>${nom}</b>?`,ans,o,t[2],`„${ans}” – ${t[2]}`);
 }
-
-// ---------- generatory zadań ----------
-// Każdy zwraca: {html, type: 'num'|'text'|'time', answer, show, hint, explain, unit?, svg?}
-const num = (html, answer, hint, explain, unit = '') => ({ html, type: 'num', answer, show: answer + (unit ? ' ' + unit : ''), hint, explain, unit });
-
-function genMult() {
-  const a = rnd(2, 10), b = rnd(2, 10);
-  const p = a * b;
-  if (Math.random() < 0.3) {
-    return num(`? × ${b} = ${p}`, a, `Zapytaj siebie: ile razy ${b} daje ${p}? Policz skokami po ${b}.`,
-      `${a} × ${b} = ${p}, więc brakuje liczby ${a}.`);
-  }
-  return num(`${a} × ${b} = ?`, p, `Policz skokami: ${Array.from({length: Math.min(b, 5)}, (_, i) => a * (i + 1)).join(', ')}…`,
-    `${a} × ${b} to ${b} razy po ${a}: ${Array.from({length: b}, () => a).join(' + ')} = ${p}.`);
+const NV=['gram','lubię','pokazałem','robi','piłem','myłem','chodziłem','odrobił','nakarmił','urwałem','sprząta','kończy'];
+function genNie(){
+  const v=pick(NV),t=rnd(1,2);
+  if(t===1)return choice(`Jak poprawnie zapisać przeczenie? (czasownik: <b>${v}</b>)`,`nie ${v}`,[`nie${v}`],'„Nie” z czasownikami piszemy oddzielnie.',`Poprawnie: <b>nie ${v}</b>. „Nie” z czasownikami piszemy oddzielnie.`);
+  return{html:`Zamień na przeczenie, dodając „nie” przed czasownikiem: <b>${v}</b>`,type:'text',answer:`nie ${v}`,show:`nie ${v}`,hint:'Wpisz dwa słowa: najpierw „nie”, potem czasownik, oddzielnie.',explain:`<b>nie ${v}</b> – „nie” z czasownikami piszemy oddzielnie.`};
 }
-function genDiv() {
-  const d = rnd(2, 10), q = rnd(2, Math.floor(60 / d)), n = d * q;
-  if (Math.random() < 0.3) {
-    return num(`Podziel ${n} na ${d} równych części. Ile jest w jednej części?`, q, `Szukaj liczby, która pomnożona przez ${d} da ${n}.`,
-      `${n} : ${d} = ${q}, bo ${q} × ${d} = ${n}.`);
+const RZ=[
+ ['rowerzysta','r','rower'],['górzysty','r','góra'],['tatrzański','r','Tatry'],['morze','r','morski'],['marzec','r','marcowy'],['orzeł','r','orły'],
+ ['brzeg','s'],['wrzątek','s'],['grzanka','s'],['wyjrzał','s'],['chrzan','s'],['drzewo','s'],['przyroda','s'],['pojutrze','s'],
+ ['lekarz','z'],['pisarz','z'],['malarz','z'],['murarz','z'],['kucharz','z'],['tynkarz','z'],['piekarz','z'],['weterynarz','z']];
+function genRz(){
+  const t=rnd(1,3);
+  if(t===3){
+    const it=pick(RZ),why={r:'gdy wymienia się na r',s:'po spółgłosce',z:'w nazwie zawodu (-arz, -erz)'};
+    return choice(`Dlaczego w wyrazie <b>${it[0]}</b> piszemy <b>rz</b>?`,why[it[1]],Object.values(why),'Są trzy powody: wymiana na r, spółgłoska przed rz, nazwa zawodu.',`${it[0]}: rz piszemy ${why[it[1]]}${it[2]?' ('+it[2]+')':''}.`);
   }
-  return num(`${n} : ${d} = ?`, q, `Pomyśl: ile razy ${d} mieści się w ${n}? Albo: ? × ${d} = ${n}.`,
-    `${n} : ${d} = ${q}, bo ${q} × ${d} = ${n}. Dzielenie to odwrotność mnożenia.`);
+  if(t===2&&Math.random()<0.5){
+    const w=pick(['pszenica','pszczoła','kształt']);
+    return choice('Który zapis jest poprawny?',w,[w.replace('sz','rz')],'To wyjątki – po p i k piszemy tu sz. Trzeba je zapamiętać.',`<b>${w}</b> to wyjątek, który trzeba zapamiętać.`);
+  }
+  const it=pick(RZ),w=it[0];
+  const ex={r:`rz wymienia się na r${it[2]?' ('+w+' – '+it[2]+')':''}`,s:'rz piszemy po spółgłosce',z:'w nazwach zawodów piszemy -arz, -erz'}[it[1]];
+  return choice('Który zapis jest poprawny?',w,[w.replace('rz','ż')],'Sprawdź: czy rz wymienia się na r? Czy stoi po spółgłosce? Czy to nazwa zawodu?',`Poprawnie: <b>${w}</b> – ${ex}.`);
 }
-function genAS100() {
-  if (Math.random() < 0.5) {
-    const a = rnd(11, 90), b = rnd(5, 100 - a);
-    const bt = Math.floor(b / 10) * 10, bo = b % 10;
-    return num(`${a} + ${b} = ?`, a + b, `Dodaj osobno dziesiątki, potem jedności.`,
-      bo ? `${a} + ${bt} = ${a + bt}, potem ${a + bt} + ${bo} = ${a + b}.` : `${a} + ${bt} = ${a + b}.`);
-  }
-  const a = rnd(21, 100), b = rnd(5, a - 1);
-  const bt = Math.floor(b / 10) * 10, bo = b % 10;
-  return num(`${a} − ${b} = ?`, a - b, `Odejmij osobno dziesiątki, potem jedności.`,
-    bo ? `${a} − ${bt} = ${a - bt}, potem ${a - bt} − ${bo} = ${a - b}.` : `${a} − ${bt} = ${a - b}.`);
+const ZZ=[['książka','g','księgi'],['drożej','g','drogi'],['dłużej','g','długo'],['bliżej','s','blisko'],['niżej','s','nisko'],['wyżej','s','wysoko'],['groźny','z','groza'],
+ ['jeżyny'],['żyrandol'],['gdyż'],['ponieważ'],['także'],['łyżka'],['duży'],['róża'],['też'],['ostrożnie'],['różne']];
+function genZ(){
+  const it=pick(ZZ),w=it[0];
+  return choice('Który zapis jest poprawny?',w,[w.replace('ż','rz')],it[2]?`Ż piszemy, gdy wymienia się na g, z, s. Pomyśl o wyrazie: ${it[2]}.`:'Ten wyraz trzeba zapamiętać (wyraz z ż „w wężu”).',it[2]?`<b>${w}</b> – ż wymienia się na ${it[1]} (${w} – ${it[2]}).`:`<b>${w}</b> – pisownię tego wyrazu trzeba zapamiętać.`);
 }
-
-function genAS1000() {
-  if (Math.random() < 0.5) {
-    // dodawanie: suma nie większa niż 1000
-    const a = rnd(1, 9) * 100;
-    const b = rnd(1, (1000 - a) / 100) * 100;
-    return num(`${a} + ${b} = ?`, a + b,
-      `Policz setkami: ${a / 100} setki i ${b / 100} setki. Ile to razem setek?`,
-      `${a / 100} setek + ${b / 100} setek = ${(a + b) / 100} setek, czyli ${a + b}.`);
-  }
-  // odejmowanie: odjemnik mniejszy od odjemnej
-  const a = rnd(2, 10) * 100;
-  const b = rnd(1, a / 100 - 1) * 100;
-  return num(`${a} − ${b} = ?`, a - b,
-    `Policz setkami: z ${a / 100} setek zabierz ${b / 100} setek. Ile setek zostanie?`,
-    `${a / 100} setek − ${b / 100} setek = ${(a - b) / 100} setek, czyli ${a - b}.`);
+const CHW=[['mucha','muszka'],['brzuch','brzuszek'],['ucho','uszko'],['poducha','poduszka'],['strach','straszyć'],['dach','daszek'],['węch','węszyć'],['suchy','suszyć'],['śmiech','śmieszek']];
+const CHE=['puch','dach','ruch','duch','brzuch','strach','fartuch','kielich'];
+function genCh(){
+  const t=rnd(1,3);
+  if(t===1){return choice('Który zapis jest poprawny?','druh',['druch'],'Zasada: ch piszemy na końcu wyrazu. Ale jest wyjątek!','<b>druh</b> to wyjątek – na końcu piszemy h.');}
+  if(t===2){const w=pick(CHE);return choice('Który zapis jest poprawny?',w,[w.replace('ch','h')],'Ch piszemy na końcu wyrazu.',`<b>${w}</b> – ch jest na końcu wyrazu.`);}
+  const p=pick(CHW);return choice('Który zapis jest poprawny?',p[0],[p[0].replace('ch','h')],`Ch wymienia się na sz. Pomyśl o wyrazie: ${p[1]}.`,`<b>${p[0]}</b> – ch wymienia się na sz (${p[0]} – ${p[1]}).`);
 }
-
-const NAMES = ['Ania', 'Kasia', 'Zosia', 'Tomek', 'Olek', 'Maja', 'Staś', 'Lena'];
-function genWord() {
-  const n = pick(NAMES);
-  const t = rnd(1, 8);
-  if (t === 1) {
-    const a = rnd(3, 10), b = rnd(2, Math.floor(100 / a));
-    return num(`${n} układa ołówki w pudełkach. Jedno pudełko: ${a} ołówków. Liczba pudełek: ${b}. Ile ołówków jest razem?`, a * b,
-      'Mamy kilka takich samych grup, więc mnożymy.', `${b} pudełek po ${a} ołówków: ${a} × ${b} = ${a * b}.`);
-  }
-  if (t === 2) {
-    const d = rnd(2, 6), q = rnd(2, Math.floor(60 / d)), s = d * q;
-    return num(`${n} ma ${s} cukierków i dzieli je po równo między ${d} osób. Ile cukierków dostanie jedna osoba?`, q,
-      'Dzielimy po równo, więc dzielimy.', `${s} : ${d} = ${q}, bo ${q} × ${d} = ${s}.`);
-  }
-  if (t === 3) {
-    const a = rnd(40, 100), b = rnd(10, a - 5);
-    return num(`${n} miał(a) ${a} zł. Kupił(a) książkę za ${b} zł. Ile złotych zostało?`, a - b,
-      'Coś zostało, czyli odejmujemy.', `${a} − ${b} = ${a - b} zł.`, 'zł');
-  }
-  if (t === 4) {
-    const a = rnd(20, 60), b = rnd(10, 100 - a);
-    return num(`W sadzie rośnie ${a} jabłoni i ${b} grusz. Ile drzew rośnie w sadzie?`, a + b,
-      'Łączymy dwie grupy, więc dodajemy.', `${a} + ${b} = ${a + b}.`);
-  }
-  if (t === 5) {
-    const a = rnd(30, 60), b = rnd(10, a - 5);
-    return num(`${n} ma ${a} naklejek, a jej brat ${b}. O ile naklejek więcej ma ${n}?`, a - b,
-      '„O ile więcej” to różnica, czyli odejmowanie.', `${a} − ${b} = ${a - b}.`);
-  }
-  if (t === 6) {
-    const k = rnd(2, 5), p = rnd(3, Math.floor(50 / k)), paid = 50;
-    return num(`${n} kupił(a) ${k} zeszyty po ${p} zł każdy i zapłacił(a) 50 zł. Ile reszty dostał(a)?`, paid - k * p,
-      'Najpierw policz, ile kosztują wszystkie zeszyty (mnożenie), potem odejmij od 50 zł.',
-      `Zeszyty: ${k} × ${p} = ${k * p} zł. Reszta: 50 − ${k * p} = ${paid - k * p} zł.`, 'zł');
-  }
-  if (t === 7) {
-    const a = rnd(2, 6), k = rnd(2, Math.floor(60 / a) > 8 ? 8 : Math.floor(60 / a)), b = a * k;
-    return num(`${n} ma ${a} cukierków, a Olek ${b}. Ile razy więcej cukierków ma Olek?`, k,
-      '„Ile razy więcej” to dzielenie większej liczby przez mniejszą.', `${b} : ${a} = ${k}, bo ${k} × ${a} = ${b}.`);
-  }
-  const kg = rnd(1, 3), dag = rnd(1, 9) * 10;
-  return num(`${n} kupił(a) ${kg} kg jabłek i ${dag} dag gruszek. Ile dekagramów owoców kupił(a) razem?`, kg * 100 + dag,
-    'Zamień kilogramy na dekagramy (1 kg = 100 dag), potem dodaj.',
-    `${kg} kg = ${kg * 100} dag. ${kg * 100} + ${dag} = ${kg * 100 + dag} dag.`, 'dag');
+const ADJ=[['kolorowe','kredki','p'],['plastikowa','temperówka','f'],['biała','gumka','f'],['ostre','nożyczki','p'],['spakowany','plecak','m'],['niebieski','długopis','m'],['przezroczysty','klej','m'],['natemperowany','ołówek','m']];
+function genAdj(){
+  const it=pick(ADJ),o=shuffle(ADJ.filter(x=>x[2]!==it[2])).slice(0,2).map(x=>x[0]);
+  return choice(`Który przymiotnik pasuje: <b>___ ${it[1]}</b>?`,it[0],o,`Zadaj pytanie: jaki? jaka? jakie? ${it[1]}. Końcówka musi pasować do rzeczownika.`,`<b>${it[0]} ${it[1]}</b> – końcówka przymiotnika pasuje do rzeczownika.`);
+}
+function genStory(){
+  const P=[['Od czego wszystko się zaczęło?','Wstęp'],['Co się wydarzyło później?','Rozwinięcie'],['Jak to się skończyło?','Zakończenie']];
+  const p=pick(P);
+  if(Math.random()<0.5)return choice(`Która część opowiadania odpowiada na pytanie: <b>${p[0]}</b>`,p[1],['Wstęp','Rozwinięcie','Zakończenie'],'Opowiadanie ma 3 części: wstęp, rozwinięcie, zakończenie.',`${p[1]} – ${p[0]}`);
+  return choice(`Na jakie pytanie odpowiada <b>${p[1].toLowerCase()}</b> w opowiadaniu?`,p[0],P.map(x=>x[0]),'Wstęp – początek, rozwinięcie – środek, zakończenie – koniec.',`${p[1]} – ${p[0]}`);
+}
+function genSent(){
+  const S=[['Wiosną rolnik sieje zboża.',1],['Ania pomaga mamie w kuchni.',1],['Dzieci sprzątają swoje zabawki.',1],['Babcia kończy swoje zadania.',1],
+   ['Rolnik orze pole, a potem sieje zboże.',2],['Dzieci sprzątają, bo mama prosi.',2],['Janek lubi pracę w ogrodzie, gdy świeci słońce.',2],['Ania pomaga mamie, a tata gotuje obiad.',2]];
+  const s=pick(S);
+  return choice(`Czy to zdanie jest pojedyncze, czy złożone?<br><i>${s[0]}</i>`,s[1]===1?'pojedyncze':'złożone',['pojedyncze','złożone'],'Policz czasowniki (co robi?). Jeden czasownik – zdanie pojedyncze. Dwa lub więcej – złożone.',`W zdaniu jest ${s[1]} ${s[1]===1?'czasownik':'czasowniki'}, więc jest ono ${s[1]===1?'pojedyncze':'złożone'}.`);
+}
+function genIdiom(){
+  const I=[['zbijać bąki','nic nie robić, leniuchować',['ciężko pracować','głośno śpiewać']],['mieć w sobie lenia','nic się nie chce robić',['bardzo dużo się uczyć','być bardzo wesołym']],['mieć muchy w nosie','być w złym humorze',['lubić owady','mieć katar']]];
+  const i=pick(I);
+  return choice(`Co znaczy powiedzenie: <b>${i[0]}</b>?`,i[1],i[2],'Nie czytaj dosłownie. Pomyśl, co to znaczy w przenośni.',`„${i[0]}” znaczy: ${i[1]}.`);
+}
+function genRead(){
+  const text='Wiosną rolnik sieje zboża, pietruszkę i buraki. Latem pielęgnuje rośliny. Jesienią zbiera plony kombajnem.';
+  const Q=[['Co robi rolnik wiosną?','sieje',['zbiera','orze']],['Czym rolnik zbiera plony?','kombajnem',['traktorem','łopatą']],['Kiedy rolnik zbiera plony?','jesienią',['wiosną','zimą']]];
+  const q=pick(Q);
+  return choice(`Przeczytaj: <i>${text}</i><br><br><b>${q[0]}</b>`,q[1],q[2],'Przeczytaj tekst jeszcze raz i znajdź odpowiedź.',`W tekście: „${text}” Odpowiedź: ${q[1]}.`);
 }
 
-function genClock() {
-  const t = rnd(1, 5);
-  if (t <= 2) {
-    const h = rnd(1, 12), m = Math.random() < 0.7 ? rnd(0, 11) * 5 : rnd(0, 59);
-    return { html: 'Która godzina jest na zegarze? Wpisz np. 3:15', type: 'time', answer: { h, m }, show: fmtTime(h, m),
-      svg: clockSvg(h, m), hint: 'Krótka, gruba wskazówka pokazuje godziny. Długa, czerwona pokazuje minuty. Każda duża cyfra to 5 minut (np. przy 3 jest 15 minut).',
-      explain: `Krótka wskazówka jest przy ${h}, długa pokazuje ${m} minut. Jest godzina ${fmtTime(h, m)}. Minuty liczymy po 5 przy każdej cyfrze.` };
-  }
-  if (t === 3) {
-    const h = rnd(1, 12), m = rnd(0, 11) * 5, d = rnd(3, 18) * 5;
-    const r = addMinutes(h, m, d);
-    return { html: `Lekcja zaczyna się o ${fmtTime(h, m)} i trwa ${d} minut. O której się kończy? Wpisz np. 9:05`, type: 'time',
-      answer: r, show: fmtTime(r.h, r.m), hint: 'Pamiętaj: gdy minut jest 60, zaczyna się następna godzina.',
-      explain: `${fmtTime(h, m)} + ${d} min. Pełna godzina to 60 minut, ${d} min = ${Math.floor(d / 60)} h ${d % 60} min. Wychodzi ${fmtTime(r.h, r.m)}.` };
-  }
-  if (t === 4) {
-    const h = rnd(1, 10), m = rnd(0, 11) * 5, d = rnd(4, 22) * 5;
-    const r = addMinutes(h, m, d);
-    return num(`Film zaczął się o ${fmtTime(h, m)}, a skończył o ${fmtTime(r.h, r.m)}. Ile minut trwał?`, d,
-      'Policz od początku do pełnej godziny, a potem resztę minut do końca.',
-      `Od ${fmtTime(h, m)} do ${fmtTime(r.h, r.m)} mija ${d} minut.`, 'min');
-  }
-  if (Math.random() < 0.5) {
-    const h = rnd(1, 4);
-    return num(`Ile minut ma ${h === 1 ? '1 godzina' : h + ' godziny'}?`, h * 60, '1 godzina = 60 minut.', `${h} × 60 = ${h * 60} minut.`, 'min');
-  }
-  const h = rnd(2, 4);
-  return num(`${h * 60} minut to ile godzin?`, h, '1 godzina = 60 minut.', `${h * 60} : 60 = ${h}.`, 'godz.');
-}
+const TOPICS={
+ mat:[{id:'mult',name:'✖ Mnożenie',gen:genMult},{id:'div',name:'➗ Dzielenie',gen:genDiv},{id:'as100',name:'➕ Do 100',gen:genAS100},{id:'as1000',name:'💯 Setkami do 1000',gen:genAS1000},
+  {id:'word',name:'📝 Zadania tekstowe',gen:genWord},{id:'clock',name:'🕐 Zegar',gen:genClock},{id:'vol',name:'🥛 Litry i ćwiartki',gen:genVolume},{id:'mass',name:'⚖ Masa',gen:genMass},
+  {id:'place',name:'🔢 Setki, dziesiątki, jedności',gen:genPlace},{id:'words',name:'🔤 Liczby słownie',gen:genWords}],
+ pol:[{id:'alpha',name:'🔠 Alfabet',gen:genAlpha},{id:'pos',name:'🏷 Części mowy',gen:genPOS},{id:'nie',name:'🚫 „Nie” z czasownikami',gen:genNie},{id:'rz',name:'rz',gen:genRz},
+  {id:'z',name:'ż',gen:genZ},{id:'ch',name:'ch',gen:genCh},{id:'adj',name:'🎨 Przymiotniki',gen:genAdj},{id:'story',name:'📖 Budowa opowiadania',gen:genStory},
+  {id:'sent',name:'✂ Zdania pojedyncze i złożone',gen:genSent},{id:'idiom',name:'💬 Frazeologizmy',gen:genIdiom},{id:'read',name:'👀 Czytanie ze zrozumieniem',gen:genRead}]
+};
 
-function genVolume() {
-  const t = rnd(1, 6);
-  const hint = '1 litr = 2 × pół litra = 4 × ćwierć litra.';
-  if (t === 1) { const n = rnd(1, 5); return num(`Ile ćwiartek litra (¼ l) jest w ${n} l?`, n * 4, hint, `W 1 litrze są 4 ćwiartki, więc w ${n} l: ${n} × 4 = ${n * 4}.`, 'ćwiartek'); }
-  if (t === 2) { const n = rnd(2, 8); return num(`Ile półlitrowych szklanek (½ l) można napełnić z ${n} l soku?`, n * 2, hint, `W 1 litrze są 2 połówki, więc ${n} × 2 = ${n * 2}.`, 'szklanek'); }
-  if (t === 3) { const k = rnd(2, 6) * 4; return num(`${k} ćwiartek litra to ile litrów?`, k / 4, hint, `4 ćwiartki to 1 litr, więc ${k} : 4 = ${k / 4}.`, 'l'); }
-  if (t === 4) { const k = rnd(2, 8) * 2; return num(`${k} półlitrowych butelek to ile litrów wody?`, k / 2, hint, `2 połówki to 1 litr, więc ${k} : 2 = ${k / 2}.`, 'l'); }
-  if (t === 5) { const x = rnd(1, 3), y = rnd(1, 3); return num(`Nalano ${x === 1 ? 'pół litra' : x + ' razy pół litra'} i dolano ${y} ${y === 1 ? 'ćwierć litra' : 'razy ćwierć litra'}. Ile to razem ćwiartek litra?`, 2 * x + y, hint + ' Pół litra to 2 ćwiartki.', `${x} × 2 = ${2 * x} ćwiartek, plus ${y} = ${2 * x + y} ćwiartek.`, 'ćwiartek'); }
-  const a = rnd(1, 3); return num(`W dzbanku jest 1 litr. Wylano ${a} ćwiartki litra. Ile ćwiartek litra zostało?`.replace('1 ćwiartki', '1 ćwiartkę'), 4 - a, hint, `1 litr to 4 ćwiartki, 4 − ${a} = ${4 - a}.`, 'ćwiartek');
-}
+// ---------- stan ----------
+const KEY='nauka3_v2';
+let state=JSON.parse(localStorage.getItem(KEY)||'null')||{stats:{},stars:0};
+const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
+let subj='mat',mode='pr';
+const active={mat:new Set(TOPICS.mat.map(t=>t.id)),pol:new Set(TOPICS.pol.map(t=>t.id))};
+let session,test,cur=null,answered=false,chosen=null;
+const TESTN=15;
+const sid=(t)=>subj+'_'+t.id;
+function resetSession(){session={ok:0,all:0,streak:0};test={n:0,log:[]};}
+resetSession();
 
-function genMass() {
-  const t = rnd(1, 7);
-  const hint = '1 kg = 100 dag = 1000 g, a 1 dag = 10 g.';
-  if (t === 1) { const n = rnd(1, 9); return num(`${n} kg = ? dag`, n * 100, hint, `1 kg to 100 dag, więc ${n} × 100 = ${n * 100}.`, 'dag'); }
-  if (t === 2) { const n = rnd(1, 5); return num(`${n} kg = ? g`, n * 1000, hint, `1 kg to 1000 g, więc ${n} × 1000 = ${n * 1000}.`, 'g'); }
-  if (t === 3) { const n = rnd(2, 99); return num(`${n} dag = ? g`, n * 10, hint, `1 dag to 10 g, więc ${n} × 10 = ${n * 10}.`, 'g'); }
-  if (t === 4) { const n = rnd(2, 90) * 10; return num(`${n} g = ? dag`, n / 10, hint, `10 g to 1 dag, więc ${n} : 10 = ${n / 10}.`, 'dag'); }
-  if (t === 5) {
-    const o = pick([['pół kilograma', 'dag', 50, 'Pół kg to 100 : 2 = 50 dag.'], ['pół kilograma', 'g', 500, 'Pół kg to 1000 : 2 = 500 g.'],
-                    ['ćwierć kilograma', 'dag', 25, 'Ćwierć kg to 100 : 4 = 25 dag.'], ['ćwierć kilograma', 'g', 250, 'Ćwierć kg to 1000 : 4 = 250 g.']]);
-    return num(`${o[0]} to ile ${o[1] === 'dag' ? 'dekagramów' : 'gramów'}?`, o[2], hint, o[3], o[1]);
-  }
-  if (t === 6) { const a = rnd(1, 5), b = rnd(1, 9) * 10; return num(`${a} kg ${b} dag = ? dag`, a * 100 + b, hint, `${a} kg = ${a * 100} dag, plus ${b} dag = ${a * 100 + b} dag.`, 'dag'); }
-  const x = rnd(1, 9) * 10 + rnd(0, 1) * 5; return num(`Ile dekagramów brakuje do 1 kg, jeśli mamy ${x} dag?`, 100 - x, hint, `1 kg = 100 dag, więc 100 − ${x} = ${100 - x} dag.`, 'dag');
-}
-
-function genPlace() {
-  const t = rnd(1, 5);
-  const h = rnd(1, 9), d = rnd(1, 9), u = rnd(1, 9), n = h * 100 + d * 10 + u;
-  const hint = 'Pierwsza cyfra to setki, druga to dziesiątki, trzecia to jedności.';
-  if (t === 1) return num(`Ile setek ma liczba ${n}?`, h, hint, `W liczbie ${n} cyfra setek to ${h}, czyli ${h} setek.`);
-  if (t === 2) return num(`${h} setek, ${d} dziesiątek i ${u} jedności to liczba…`, n, hint, `${h * 100} + ${d * 10} + ${u} = ${n}.`);
-  if (t === 3) {
-    const pos = rnd(0, 2), digit = [h, d, u][pos], val = digit * [100, 10, 1][pos];
-    return num(`Jaką wartość ma cyfra ${digit} w liczbie ${n}? (Cyfra stoi na ${['miejscu setek', 'miejscu dziesiątek', 'miejscu jedności'][pos]}.)`, val, hint,
-      `Na miejscu ${['setek', 'dziesiątek', 'jedności'][pos]} cyfra ${digit} oznacza ${val}.`);
-  }
-  if (t === 4) return num(`${n} = ${h * 100} + ? + ${u}`, d * 10, hint, `${n} − ${h * 100} − ${u} = ${d * 10}. To ${d} dziesiątek.`);
-  const m = rnd(11, 99) * 10;
-  return num(`Ile pełnych dziesiątek jest w liczbie ${m}?`, m / 10, '1 dziesiątka to 10. Ile razy 10 mieści się w tej liczbie?', `${m} : 10 = ${m / 10} dziesiątek.`);
-}
-
-function genWords() {
-  const n = Math.random() < 0.05 ? 1000 : rnd(11, 999);
-  const w = toWords(n);
-  const parts = [];
-  if (n >= 100 && n < 1000) parts.push(`${Math.floor(n / 100) * 100} (${HUNDREDS[Math.floor(n / 100)]})`);
-  if (n % 100) parts.push(`${n % 100} (${toWords(n % 100)})`);
-  const explain = n === 1000 ? '1000 to tysiąc.' : `${n} = ${parts.join(' + ')}. Razem: ${w}.`;
-  if (Math.random() < 0.65) {
-    return { html: `Zapisz słownie liczbę: <b>${n}</b>`, type: 'text', answer: w, show: w, unit: '',
-      hint: 'Zapisuj od najwyższego miejsca: setki, potem dziesiątki, potem jedności. Liczby 11–19 mają swoje nazwy.', explain };
-  }
-  return { html: `Zapisz cyframi liczbę: <b>${w}</b>`, type: 'num', answer: n, show: String(n), unit: '',
-    hint: 'Zapisz osobno setki, dziesiątki i jedności, a potem je połącz.', explain };
-}
-
-const TOPICS = [
-  { id: 'mult', name: '✖ Mnożenie', gen: genMult },
-  { id: 'div', name: '➗ Dzielenie', gen: genDiv },
-  { id: 'as100', name: '➕ Dodawanie i odejmowanie do 100', gen: genAS100 },
-  { id: 'as1000', name: '💯 Setkami do 1000', gen: genAS1000 },
-  { id: 'word', name: '📝 Zadania tekstowe', gen: genWord },
-  { id: 'clock', name: '🕒 Zegar', gen: genClock },
-  { id: 'vol', name: '🥛 Litry i ćwiartki', gen: genVolume },
-  { id: 'mass', name: '⚖ Masa (kg, dag, g)', gen: genMass },
-  { id: 'place', name: '🔢 Setki, dziesiątki, jedności', gen: genPlace },
-  { id: 'words', name: '🔤 Liczby słownie', gen: genWords },
-];
-
-// ---------- stan i zapis ----------
-const KEY = 'mat3_v1';
-let state = JSON.parse(localStorage.getItem(KEY) || 'null') || { stats: {}, stars: 0 };
-const save = () => localStorage.setItem(KEY, JSON.stringify(state));
-let active = new Set(TOPICS.map(t => t.id));
-let session = { ok: 0, all: 0, streak: 0 };
-let cur = null, answered = false;
-
-const $ = id => document.getElementById(id);
-
-function renderChips() {
-  $('chips').innerHTML = '';
-  TOPICS.forEach(t => {
-    const b = document.createElement('button');
-    b.className = 'chip' + (active.has(t.id) ? ' on' : '');
-    b.textContent = t.name;
-    b.onclick = () => {
-      if (active.has(t.id)) { if (active.size > 1) active.delete(t.id); } else active.add(t.id);
-      renderChips(); nextQuestion();
-    };
+function renderChips(){
+  $('chips').innerHTML='';
+  TOPICS[subj].forEach(t=>{
+    const b=document.createElement('button');
+    b.className='chip'+(active[subj].has(t.id)?' on':'');b.textContent=t.name;
+    b.onclick=()=>{const a=active[subj];if(a.has(t.id)){if(a.size>1)a.delete(t.id);}else a.add(t.id);renderChips();nextQuestion();};
     $('chips').appendChild(b);
   });
 }
-
-function renderScore() {
-  $('sOk').textContent = session.ok;
-  $('sAll').textContent = session.all;
-  $('sStreak').textContent = session.streak;
-  $('sStars').textContent = state.stars;
-}
-
-function renderStats() {
-  $('stats').innerHTML = TOPICS.map(t => {
-    const s = state.stats[t.id] || { ok: 0, bad: 0 };
-    const tot = s.ok + s.bad, pct = tot ? Math.round(100 * s.ok / tot) : 0;
-    return `<p style="margin:8px 0 2px">${t.name}: <b>${s.ok}/${tot}</b> (${tot ? pct + '%' : 'brak danych'})</p><div class="bar"><div style="width:${pct}%"></div></div>`;
+function renderScore(){$('sOk').textContent=session.ok;$('sAll').textContent=session.all;$('sStreak').textContent=session.streak;$('sStars').textContent=state.stars;}
+function renderStats(){
+  $('stats').innerHTML=TOPICS[subj].map(t=>{
+    const s=state.stats[sid(t)]||{ok:0,bad:0},tot=s.ok+s.bad,pct=tot?Math.round(100*s.ok/tot):0;
+    return `<p style="margin:8px 0 2px">${t.name}: <b>${s.ok}/${tot}</b> (${tot?pct+'%':'brak danych'})</p><div class="bar"><div style="width:${pct}%"></div></div>`;
   }).join('');
 }
-
-function pickTopic() {
-  const list = TOPICS.filter(t => active.has(t.id));
-  const w = list.map(t => { const s = state.stats[t.id] || { ok: 0, bad: 0 }; return 1 + 3 * s.bad / (s.ok + s.bad + 2); });
-  let r = Math.random() * w.reduce((a, b) => a + b, 0);
-  for (let i = 0; i < list.length; i++) { r -= w[i]; if (r <= 0) return list[i]; }
-  return list[list.length - 1];
+function pickTopic(){
+  const list=TOPICS[subj].filter(t=>active[subj].has(t.id));
+  const w=list.map(t=>{const s=state.stats[sid(t)]||{ok:0,bad:0};return 1+3*s.bad/(s.ok+s.bad+2);});
+  let r=Math.random()*w.reduce((a,b)=>a+b,0);
+  for(let i=0;i<list.length;i++){r-=w[i];if(r<=0)return list[i];}
+  return list[list.length-1];
 }
-
-function nextQuestion() {
-  const t = pickTopic();
-  cur = t.gen(); cur.topic = t; answered = false;
-  $('qTopic').textContent = t.name;
-  $('qSvg').innerHTML = cur.svg || '';
-  $('qText').innerHTML = cur.html;
-  $('unit').textContent = cur.unit || '';
-  
-$('ans').value = ''; $('ans').className = ''; $('ans').disabled = false; $('ans').focus();
-
-  $('fb').className = 'fb'; $('fb').innerHTML = '';
-  $('hint').style.display = 'none';
-  $('btnCheck').style.display = ''; $('btnHint').style.display = ''; $('btnNext').style.display = 'none';
+function nextQuestion(){
+  $('resCard').classList.add('hide');$('qCard').classList.remove('hide');
+  if(mode==='te'&&test.n>=TESTN){showResult();return;}
+  const t=pickTopic();cur=t.gen();cur.topic=t;answered=false;chosen=null;
+  $('qTopic').textContent=t.name+(mode==='te'?`  •  pytanie ${test.n+1} z ${TESTN}`:'');
+  $('qSvg').innerHTML=cur.svg||'';$('qText').innerHTML=cur.html;
+  $('unit').textContent=cur.unit||'';
+  $('ans').value='';$('ans').className='';$('ans').disabled=false;
+  $('fb').className='fb';$('fb').innerHTML='';$('hint').style.display='none';
+  const isCh=cur.type==='choice';
+  $('inRow').style.display=isCh?'none':'flex';
+  $('opts').innerHTML='';
+  if(isCh){
+    cur.options.forEach(o=>{
+      const b=document.createElement('button');b.className='opt';b.textContent=o;
+      b.onclick=()=>{if(answered)return;chosen=o;[...$('opts').children].forEach(x=>x.classList.remove('sel'));b.classList.add('sel');};
+      $('opts').appendChild(b);
+    });
+  } else $('ans').focus();
+  $('btnCheck').style.display='';$('btnHint').style.display=mode==='te'?'none':'';$('btnNext').style.display='none';
 }
-
-function isCorrect(input) {
-  if (cur.type === 'num') {
-    const v = Number(input.replace(',', '.').replace(/\s/g, ''));
-    return input.trim() !== '' && v === cur.answer;
-  }
-  if (cur.type === 'text') return norm(input) === norm(cur.answer);
-  const m = input.trim().match(/^(\d{1,2})\s*[:.,\-]?\s*(\d{2})$/) || input.trim().match(/^(\d{1,2})$/);
-  if (!m) return false;
-  const h = Number(m[1]), mi = m[2] ? Number(m[2]) : 0;
-  return mi < 60 && (h % 12) === (cur.answer.h % 12) && mi === cur.answer.m;
+function isCorrect(input){
+  if(cur.type==='choice')return input===cur.answer;
+  if(cur.type==='num'){const v=Number(String(input).replace(',','.').replace(/\s/g,''));return String(input).trim()!==''&&v===cur.answer;}
+  if(cur.type==='text')return norm(input)===norm(cur.answer);
+  const m=input.trim().match(/^(\d{1,2})\s*[:.,\-]?\s*(\d{2})$/)||input.trim().match(/^(\d{1,2})$/);
+  if(!m)return false;
+  const h=Number(m[1]),mi=m[2]?Number(m[2]):0;
+  return mi<60&&(h%12)===(cur.answer.h%12)&&mi===cur.answer.m;
 }
-
-
-
-const SOUND = true; // zmień na false, jeśli dźwięk ma być wyłączony
-const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-function beep(ok) {
-  if (!SOUND) return;
-  try {
-    const c = new (window.AudioContext || window.webkitAudioContext)();
-    const o = c.createOscillator(), g = c.createGain();
-    o.type = ok ? 'sine' : 'square';
-    o.frequency.value = ok ? 880 : 200;
-    g.gain.value = 0.1;
-    o.connect(g); g.connect(c.destination);
-    o.start(); o.stop(c.currentTime + (ok ? 0.15 : 0.3));
-  } catch (e) {}
-}
-
-function check() {
-  if (answered) return;
-  const input = $('ans').value;
-  if (!input.trim()) { $('ans').focus(); return; }
-  answered = true;
-  const ok = isCorrect(input);
-  const id = cur.topic.id;
-  state.stats[id] = state.stats[id] || { ok: 0, bad: 0 };
+function check(){
+  if(answered)return;
+  const input=cur.type==='choice'?chosen:$('ans').value;
+  if(!input||!String(input).trim()){if(cur.type!=='choice')$('ans').focus();return;}
+  answered=true;
+  const ok=isCorrect(input),id=sid(cur.topic);
+  state.stats[id]=state.stats[id]||{ok:0,bad:0};
   session.all++;
-  if (ok) {
-    state.stats[id].ok++; session.ok++; session.streak++;
-    const star = session.streak % 5 === 0;
-    if (star) state.stars++;
-    $('ans').className = 'ok';
-    $('fb').className = 'fb ok';
-    $('fb').innerHTML = `<div class="big">✅ DOBRZE!</div>${pick(['Brawo!', 'Świetnie!', 'Super!', 'Dokładnie tak!'])}` +
-      (star ? '<br>⭐ Nowa gwiazdka za 5 dobrych odpowiedzi z rzędu!' : '');
-  } else {
-    state.stats[id].bad++; session.streak = 0;
-    $('ans').className = 'bad';
-    $('fb').className = 'fb bad';
-    $('fb').innerHTML = `<div class="big">❌ BŁĄD</div>` +
-      `Twoja odpowiedź: <b>${esc(input)}</b><br>` +
-      `Poprawna odpowiedź: <b>${cur.show}</b><br>👉 ${cur.explain}`;
+  if(ok){state.stats[id].ok++;session.ok++;session.streak++;if(session.streak%5===0)state.stars++;}
+  else{state.stats[id].bad++;session.streak=0;}
+  save();renderScore();renderStats();
+  if(mode==='te'){
+    test.n++;
+    test.log.push({q:cur.html.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim(),input:String(input),show:cur.show,explain:cur.explain,ok});
+    nextQuestion();return;
   }
+  const star=ok&&session.streak%5===0;
+  $('ans').className=ok?'ok':'bad';
+  $('fb').className='fb '+(ok?'ok':'bad');
+  $('fb').innerHTML=ok
+    ?`<div class="big">✅ DOBRZE!</div>${pick(['Brawo!','Świetnie!','Super!','Dokładnie tak!'])}`+(star?'<br>⭐ Nowa gwiazdka za 5 dobrych odpowiedzi z rzędu!':'')
+    :`<div class="big">❌ BŁĄD</div>Twoja odpowiedź: <b>${esc(input)}</b><br>Poprawna odpowiedź: <b>${cur.show}</b><br>💡 ${cur.explain}`;
+  if(cur.type==='choice')[...$('opts').children].forEach(b=>{if(b.textContent===cur.answer)b.classList.add('right');else if(b.textContent===chosen)b.classList.add('wrong');});
   beep(ok);
-  save(); renderScore(); renderStats();
-  $('ans').disabled = true;
-  $('btnCheck').style.display = 'none'; $('btnHint').style.display = 'none'; $('btnNext').style.display = '';
-  $('fb').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
- 
+  $('ans').disabled=true;
+  $('btnCheck').style.display='none';$('btnHint').style.display='none';$('btnNext').style.display='';
+  $('fb').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
-
-
-
-$('btnCheck').onclick = check;
-$('btnNext').onclick = nextQuestion;
-$('btnHint').onclick = () => { $('hint').innerHTML = '💡 ' + cur.hint; $('hint').style.display = 'block'; };
-$('btnReset').onclick = () => {
-  if (confirm('Na pewno wyczyścić wyniki i gwiazdki?')) { state = { stats: {}, stars: 0 }; save(); renderStats(); renderScore(); }
-};
-
-document.addEventListener('keydown', e => {
-  if (e.key !== 'Enter') return;
-  e.preventDefault();      // blokuje „podwójne” kliknięcie przez przeglądarkę
-  if (e.repeat) return;    // ignoruje przytrzymany klawisz
-  answered ? nextQuestion() : check();
+function showResult(){
+  $('qCard').classList.add('hide');$('resCard').classList.remove('hide');
+  const good=test.log.filter(x=>x.ok).length,pct=Math.round(100*good/TESTN),bad=test.log.filter(x=>!x.ok);
+  $('resCard').innerHTML=`<h2 style="margin-top:0;color:#2649b2">Wynik: ${good} / ${TESTN} (${pct}%)</h2>`+
+   (bad.length?`<p>Do powtórzenia (${bad.length}):</p>`+bad.map(x=>`<div class="mis"><b>${esc(x.q)}</b><br>Twoja odpowiedź: ${esc(x.input)}<br>Poprawnie: <b>${x.show}</b><br>💡 ${x.explain}</div>`).join(''):'<p>🎉 Bez błędów!</p>')+
+   `<p><small>To pomoc w nauce, nie ocena. Błędy najlepiej omówić razem.</small></p><button id="btnAgain">Jeszcze raz</button>`;
+  $('btnAgain').onclick=()=>{resetSession();renderScore();nextQuestion();};
+}
+function setSubject(s){subj=s;$('tabMat').classList.toggle('on',s==='mat');$('tabPol').classList.toggle('on',s==='pol');
+  $('cheatMat').classList.toggle('hide',s!=='mat');$('cheatPol').classList.toggle('hide',s!=='pol');
+  resetSession();renderChips();renderScore();renderStats();nextQuestion();}
+function setMode(m){mode=m;$('modePr').classList.toggle('on',m==='pr');$('modeTe').classList.toggle('on',m==='te');resetSession();renderScore();nextQuestion();}
+$('tabMat').onclick=()=>setSubject('mat');$('tabPol').onclick=()=>setSubject('pol');
+$('modePr').onclick=()=>setMode('pr');$('modeTe').onclick=()=>setMode('te');
+$('btnCheck').onclick=check;$('btnNext').onclick=nextQuestion;
+$('btnHint').onclick=()=>{$('hint').innerHTML='💡 '+cur.hint;$('hint').style.display='block';};
+$('btnReset').onclick=()=>{if(confirm('Na pewno wyczyścić wyniki i gwiazdki?')){state={stats:{},stars:0};save();renderStats();renderScore();}};
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  e.preventDefault();if(e.repeat)return;
+  if(!$('resCard').classList.contains('hide'))return;
+  answered?nextQuestion():check();
 });
-
-
-renderChips(); renderScore(); renderStats(); nextQuestion();
+renderChips();renderScore();renderStats();nextQuestion();
 </script>
 </body>
 </html>
