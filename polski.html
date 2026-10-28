@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Język polski – klasa 3</title>
+<style>
+:root{--main:#4a74f3;--dark:#2649b2;--ok:#1f9d55;--bad:#d64545;--bg:#f3f5ff}
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);margin:0;padding:12px;color:#222}
+.wrap{max-width:680px;margin:0 auto}
+h1{color:var(--dark);text-align:center;margin:8px 0}
+.card{background:#fff;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:2px solid var(--main);background:#fff;color:var(--dark);border-radius:20px;padding:6px 10px;cursor:pointer;font-size:14px}
+.chip.on{background:var(--main);color:#fff}
+.score{display:flex;justify-content:space-around;text-align:center;font-size:15px}
+.score b{font-size:22px;display:block;color:var(--dark)}
+.topic{font-size:13px;color:#667;margin-bottom:6px}
+.question{font-size:22px;line-height:1.4;margin:8px 0 12px}
+.opt{display:block;width:100%;text-align:left;font-size:20px;padding:12px 14px;margin:8px 0;border:2px solid var(--main);background:#fff;color:#222;border-radius:12px;cursor:pointer}
+.opt:disabled{cursor:default}
+.opt.right{background:#d7f5e3;border-color:var(--ok)}
+.opt.wrong{background:#fde0e0;border-color:var(--bad);animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-5px)}}
+input[type=text]{font-size:22px;padding:8px 12px;border:2px solid #bbc;border-radius:10px;width:100%}
+input[type=text].ok{border-color:var(--ok);background:#d7f5e3}
+input[type=text].bad{border-color:var(--bad);background:#fde0e0}
+button.btn{font-size:17px;border:0;border-radius:10px;padding:10px 16px;cursor:pointer;background:var(--main);color:#fff;margin:6px 6px 0 0}
+button.sec{background:#e5e9fb;color:var(--dark)}
+.fb{margin-top:12px;padding:14px;border-radius:12px;display:none;font-size:17px;line-height:1.5}
+.fb .big{font-size:30px;font-weight:bold;margin-bottom:6px}
+.fb.ok{background:#d7f5e3;border:3px solid var(--ok);color:#14663a;display:block}
+.fb.bad{background:#fde0e0;border:3px solid var(--bad);color:#8f1f1f;display:block}
+.hint{margin-top:10px;background:#fff8dc;padding:10px;border-radius:10px;display:none}
+.bar{background:#e5e9fb;border-radius:6px;height:10px;overflow:hidden}
+.bar div{background:var(--ok);height:100%}
+summary{cursor:pointer;font-weight:bold;color:var(--dark)}
+details p{margin:6px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>📚 Język polski – klasa 3</h1>
+<div style="text-align:center"><a href="index.html">➜ Matematyka</a></div>
+
+<div class="card">
+  <div class="topic">Wybierz, co chcesz ćwiczyć (kliknij, aby włączyć lub wyłączyć):</div>
+  <div class="chips" id="chips"></div>
+</div>
+
+<div class="card score">
+  <div><b id="sOk">0</b>dobrze</div>
+  <div><b id="sAll">0</b>zadań</div>
+  <div><b id="sStreak">0</b>🔥 seria</div>
+  <div><b id="sStars">0</b>⭐ gwiazdki</div>
+</div>
+
+<div class="card">
+  <div class="topic" id="qTopic"></div>
+  <div class="question" id="qText"></div>
+  <div id="opts"></div>
+  <div id="textRow" style="display:none"><input type="text" id="ans" autocomplete="off" autocapitalize="off"></div>
+  <div>
+    <button class="btn" id="btnCheck" style="display:none">Sprawdź</button>
+    <button class="btn sec" id="btnHint">💡 Podpowiedź</button>
+    <button class="btn sec" id="btnNext" style="display:none">Dalej ➜</button>
+  </div>
+  <div class="hint" id="hint"></div>
+  <div class="fb" id="fb"></div>
+</div>
+
+<div class="card">
+  <details>
+    <summary>📖 Zasady z zeszytu</summary>
+    <div id="rules"></div>
+  </details>
+</div>
+
+<div class="card">
+  <details>
+    <summary>📊 Moje wyniki</summary>
+    <div id="stats"></div>
+    <p><button class="btn sec" id="btnReset">Wyczyść wyniki</button></p>
+    <small>Wyniki są zapisane tylko w tej przeglądarce.</small>
+  </details>
+</div>
+</div>
+
+<script>
+// ---------- zasady i definicje (z zeszytu, część uzupełniona ogólną wiedzą) ----------
+const RULES = {
+ 'rz': 'RZ piszemy: 1) gdy wymienia się na <b>r</b> (rower – rowerzysta, góra – górzysty, Tatry – tatrzański); 2) po spółgłoskach <b>j, t, b, k, g, w, p, d, ch</b> (wyjrzał, pojutrze, brzeg, grzanka, wrzątek); 3) w nazwach zawodów <b>-arz, -erz</b> (lekarz, piekarz, weterynarz). Wyjątki: pszenica, pszczoła, kształt. Pisownię wielu wyrazów trzeba zapamiętać!',
+ 'ż': 'Ż piszemy, gdy wymienia się na <b>g, z, s</b> (książka – księga, mężczyzna – mąż, drożej – drogi). Wiele wyrazów trzeba zapamiętać: jeżyny, żyrandol, gdyż, ponieważ, także, łyżka, duży, róża, też, ostrożnie, różne.',
+ 'ch': 'CH niewymienne – trzeba zapamiętać: puch, dach, ruch, duch, ucho, brzuch, strach, fartuch, kielich. Gdy ch wymienia się na <b>sz</b>, piszemy ch: mucha – muszka, dach – daszek, strach – straszyć, ucho – uszko, suchy – suszyć, śmiech – śmieszek.',
+ 'nie': '<b>NIE z czasownikami piszemy oddzielnie</b>, np. nie gram, nie lubię, nie robi.',
+ 'części mowy': '<b>Czasowniki</b> to nazwy czynności i stanów. Odpowiadają na pytania: <b>co robi? co się z nim dzieje?</b> (np. uczy się, choruje, sieje). <b>Rzeczowniki</b> to nazwy osób, zwierząt, roślin i rzeczy; odpowiadają na pytania <b>kto? co?</b> (rolnik, pole, kombajn). <b>Przymiotniki</b> mówią, jaki jest ktoś lub coś; odpowiadają na pytania <b>jaki? jaka? jakie?</b> (zapracowany, jesienne, skoszone).',
+ 'alfabet': 'Każda litera ma w alfabecie swoje stałe miejsce. Polski alfabet składa się z <b>32 liter</b>: A, Ą, B, C, Ć, D, E, Ę, F, G, H, I, J, K, L, Ł, M, N, Ń, O, Ó, P, R, S, Ś, T, U, W, Y, Z, Ź, Ż.',
+ 'opowiadanie': 'Opowiadanie ma trzy części: <b>1. Wstęp</b> – od czego wszystko się zaczęło? <b>2. Rozwinięcie</b> – co się wydarzyło później? <b>3. Zakończenie</b> – jak to się skończyło?',
+ 'zdania': '<b>Zdanie pojedyncze</b> ma jeden czasownik (np. Ania czyta książkę). <b>Zdanie złożone</b> ma co najmniej dwa czasowniki (np. Ania czyta, a Kasia rysuje). <i>(Definicja ogólna – sprawdź w książce, czy brzmi tak samo.)</i>'
+};
+
+// ---------- tworzenie pytań ----------
+const bank = [];
+// pytanie z wyborem: c(dział, pytanie, poprawna, [błędne], wyjaśnienie)
+const c = (t,q,r,w,e) => bank.push({t,q,r,w,e,type:'choice'});
+// uzupełnianie luki: g(dział, wyraz z __, wskazówka, poprawne, [błędne], wyjaśnienie)
+const g = (t,word,cue,r,w,e) => c(t,`Uzupełnij: <b>${word}</b> <span style="color:#667">(${cue})</span>`,r,w,e);
+// odpowiedź wpisana: x(dział, pytanie, [akceptowane], wyjaśnienie)
+const x = (t,q,acc,e) => bank.push({t,q,acc,e,type:'text'});
+
+// --- RZ ---
+const RZ='rz', RZW=['ż'];
+g('rz','mo__e','morski',RZ,RZW,'morze – morski: rz wymienia się na r.');
+g('rz','mar__ec','marcowy',RZ,RZW,'marzec – marcowy: rz wymienia się na r.');
+g('rz','o__eł','orły',RZ,RZW,'orzeł – orły: rz wymienia się na r.');
+g('rz','rowe__ysta','rower',RZ,RZW,'rower – rowerzysta: rz wymienia się na r.');
+g('rz','gó__ysty','góra',RZ,RZW,'góra – górzysty: rz wymienia się na r.');
+g('rz','tat__ański','Tatry',RZ,RZW,'Tatry – tatrzański: rz wymienia się na r.');
+g('rz','b__eg','rz po spółgłosce b',RZ,RZW,'Po spółgłosce b piszemy rz: brzeg.');
+g('rz','wyj__ał','rz po spółgłosce j',RZ,RZW,'Po spółgłosce j piszemy rz: wyjrzał.');
+g('rz','g__anka','rz po spółgłosce g',RZ,RZW,'Po spółgłosce g piszemy rz: grzanka.');
+g('rz','w__ątek','rz po spółgłosce w',RZ,RZW,'Po spółgłosce w piszemy rz: wrzątek.');
+g('rz','pojut__e','rz po spółgłosce t',RZ,RZW,'Po spółgłosce t piszemy rz: pojutrze.');
+g('rz','p__yroda','rz po spółgłosce p',RZ,RZW,'Po spółgłosce p piszemy rz: przyroda.');
+g('rz','d__ewo','rz po spółgłosce d',RZ,RZW,'Po spółgłosce d piszemy rz: drzewo.');
+g('rz','ch__an','rz po spółgłosce ch',RZ,RZW,'Po spółgłosce ch piszemy rz: chrzan.');
+g('rz','k__yk','rz po spółgłosce k',RZ,RZW,'Po spółgłosce k piszemy rz: krzyk.');
+g('rz','lekar__','nazwa zawodu',RZ,RZW,'W nazwach zawodów piszemy -arz: lekarz.');
+g('rz','pisa__','nazwa zawodu',RZ,RZW,'W nazwach zawodów piszemy -arz: pisarz.');
+g('rz','malar__','nazwa zawodu',RZ,RZW,'W nazwach zawodów piszemy -arz: malarz.');
+g('rz','murar__','nazwa zawodu',RZ,RZW,'W nazwach zawodów piszemy -arz: murarz.');
+g('rz','kucha__','nazwa zawodu',RZ,RZW,'W nazwach zawodów piszemy -arz: kucharz.');
+g('rz','tynka__','nazwa zawodu',RZ,RZW,'W nazwach zawodów piszemy -arz: tynkarz.');
+g('rz','pieka__','nazwa zawodu',RZ,RZW,'W nazwach zawodów piszemy -arz: piekarz.');
+g('rz','weterynar__','nazwa zawodu',RZ,RZW,'W nazwach zawodów piszemy -arz: weterynarz.');
+g('rz','p__enica','zboże, z którego robi się mąkę','sz',['rz'],'WYJĄTEK: pszenica piszemy przez sz. Trzeba to zapamiętać.');
+g('rz','p__czoła','owad, który robi miód','sz',['rz'],'WYJĄTEK: pszczoła piszemy przez sz. Trzeba to zapamiętać.');
+g('rz','k__tałt','np. koło, kwadrat','sz',['rz'],'WYJĄTEK: kształt piszemy przez sz. Trzeba to zapamiętać.');
+c('rz','Dlaczego w słowie <b>rowerzysta</b> piszemy rz?','bo wymienia się na r (rower)',['bo jest po spółgłosce p','bo to nazwa zawodu'],'rowerzysta – rower: rz wymienia się na r.');
+c('rz','Dlaczego w słowie <b>piekarz</b> piszemy rz?','bo to nazwa zawodu (-arz)',['bo wymienia się na r','bo to wyjątek'],'Nazwy zawodów kończą się na -arz lub -erz.');
+c('rz','Dlaczego w słowie <b>grzanka</b> piszemy rz?','bo jest po spółgłosce g',['bo wymienia się na r','bo to nazwa zawodu'],'Po spółgłoskach j, t, b, k, g, w, p, d, ch piszemy rz.');
+
+// --- Ż ---
+const Z='ż';
+g('ż','ksią__ka','księga',Z,['rz'],'książka – księga: ż wymienia się na g.');
+g('ż','dro__ej','drogi',Z,['rz'],'drożej – drogi: ż wymienia się na g.');
+g('ż','kole__anka','kolega',Z,['rz'],'koleżanka – kolega: ż wymienia się na g.');
+g('ż','mę__czyzna','mąż',Z,['rz'],'mężczyzna – mąż: ż wymienia się na z.');
+g('ż','ły__ka','sztuciec do zupy',Z,['rz'],'Wyraz do zapamiętania: łyżka.');
+g('ż','j__yny','owoce, czarne lub czerwone','e'==='x'?'':'ż',['rz'],'Wyraz do zapamiętania: jeżyny.');
+g('ż','__yrandol','lampa wisząca pod sufitem',Z,['rz'],'Wyraz do zapamiętania: żyrandol.');
+g('ż','ostro__nie','tak jak ktoś, kto uważa',Z,['rz'],'Wyraz do zapamiętania: ostrożnie.');
+g('ż','ró__a','kwiat z kolcami',Z,['rz'],'Wyraz do zapamiętania: róża.');
+g('ż','du__y','przeciwieństwo: mały',Z,['rz'],'Wyraz do zapamiętania: duży.');
+g('ż','ró__ne','przeciwieństwo: takie same',Z,['rz'],'Wyraz do zapamiętania: różne.');
+g('ż','gd__','słowo łączące zdania, znaczy „ponieważ”',Z,['rz'],'Wyraz do zapamiętania: gdyż.');
+g('ż','tak__e','znaczy „też, również”',Z,['rz'],'Wyraz do zapamiętania: także.');
+g('ż','ponie__','słowo łączące zdania, znaczy „bo”',Z,['rz'],'Wyraz do zapamiętania: ponieważ.');
+c('ż','Kiedy piszemy <b>ż</b>?','gdy wymienia się na g, z, s',['gdy wymienia się na r','po spółgłoskach j, t, b'],'Ż piszemy, gdy wymienia się na g, z, s.');
+c('ż','Jaka jest poprawna pisownia?','książka',['kszążka','ksiąrzka'],'książka – księga: ż wymienia się na g.');
+
+// --- CH ---
+const CH='ch', CHW=['h'];
+g('ch','pu__','miękkie pióra ptaków',CH,CHW,'Wyraz do zapamiętania: puch.');
+g('ch','da__','na górze domu',CH,CHW,'Wyraz do zapamiętania: dach.');
+g('ch','ru__','przeciwieństwo: bezruch',CH,CHW,'Wyraz do zapamiętania: ruch.');
+g('ch','du__','zjawa, strach z bajek',CH,CHW,'Wyraz do zapamiętania: duch.');
+g('ch','u__o','tym słyszymy',CH,CHW,'Wyraz do zapamiętania: ucho.');
+g('ch','brzu__','część ciała',CH,CHW,'Wyraz do zapamiętania: brzuch.');
+g('ch','stra__','czujemy go, gdy się boimy',CH,CHW,'Wyraz do zapamiętania: strach.');
+g('ch','fartu__','nosimy go w kuchni',CH,CHW,'Wyraz do zapamiętania: fartuch.');
+g('ch','kieli__','naczynie do picia na nóżce',CH,CHW,'Wyraz do zapamiętania: kielich.');
+g('ch','mu__ka (mała mucha)','mucha – ?','sz',['ch'],'mucha – muszka: ch wymienia się na sz, więc w „mucha” piszemy ch.');
+g('ch','da__ek','dach – mały dach','sz',['ch'],'dach – daszek: ch wymienia się na sz.');
+g('ch','u__ko','ucho – małe ucho','sz',['ch'],'ucho – uszko: ch wymienia się na sz.');
+g('ch','stra__yć','strach – ?','sz',['ch'],'strach – straszyć: ch wymienia się na sz.');
+g('ch','wę__yć','węch – ?','sz',['ch'],'węch – węszyć: ch wymienia się na sz.');
+g('ch','su__yć','suchy – ?','sz',['ch'],'suchy – suszyć: ch wymienia się na sz.');
+g('ch','śmie__ek','śmiech – mały śmiech','sz',['ch'],'śmiech – śmieszek: ch wymienia się na sz.');
+g('ch','poduc__a (po zmianie: poduszka)','poduszka – ?','e'==='x'?'':'ch',['sz'],'poducha – poduszka: ch wymienia się na sz, więc w „poducha” piszemy ch.');
+g('ch','brzu__ek','brzuch – mały brzuch','sz',['ch'],'brzuch – brzuszek: ch wymienia się na sz.');
+
+// --- NIE z czasownikami ---
+const nieP = [['gram','Nie gram'],['lubię','Nie lubię'],['robi','Nie robi'],['pokazałem','Nie pokazałem'],['piłem','Nie piłem'],['myłem','Nie myłem'],['chodziłem','Nie chodziłem'],['sprzątają','Nie sprzątają'],['kończy','Nie kończy'],['pomaga','Nie pomaga'],['rosną','Nie rosną'],['czytam','Nie czytam']];
+nieP.forEach(([v])=>c('nie',`Jak poprawnie zapisać? (czasownik: <b>${v}</b>)`,`nie ${v}`,[`nie${v}`],`NIE z czasownikami piszemy oddzielnie: nie ${v}.`));
+c('nie','Zamień zdanie na przeczące: <b>Janek lubi pracę w ogrodzie.</b>','Janek nie lubi pracy w ogrodzie.',['Janek nielubi pracy w ogrodzie.','Janek lubi nie pracy w ogrodzie.'],'Dodajemy „nie” przed czasownikiem i piszemy oddzielnie.');
+c('nie','Zamień zdanie na przeczące: <b>Ania pomaga mamie w kuchni.</b>','Ania nie pomaga mamie w kuchni.',['Ania niepomaga mamie w kuchni.','Ania pomaga niemamie w kuchni.'],'Dodajemy „nie” przed czasownikiem i piszemy oddzielnie.');
+c('nie','Zamień zdanie na przeczące: <b>Dzieci sprzątają swoje zabawki.</b>','Dzieci nie sprzątają swoich zabawek.',['Dzieci niesprzątają swoich zabawek.','Dzieci sprzątają niezabawki.'],'Przed czasownikiem dodajemy „nie”, które piszemy oddzielnie.');
+c('nie','Który zapis jest poprawny?','Nie biegam po deszczu.',['Niebiegam po deszczu.'],'NIE z czasownikami piszemy oddzielnie.');
+
+// --- części mowy ---
+const verbs=[['sieje',['rolnik','jesienne']],['orze',['ziemia','skoszone']],['zbiera',['pole','zapracowany']],['uczy się',['szkoła','wesoły']],['choruje',['lekarz','chory']],['pracuje',['praca','pracowity']],['sadzi',['sad','zielony']]];
+verbs.forEach(([v,w])=>c('części mowy','Które słowo jest <b>czasownikiem</b> (co robi? co się z nim dzieje?)',v,w,`„${v}” odpowiada na pytanie co robi? lub co się z nim dzieje? – to czasownik.`));
+const nouns=[['rolnik',['sieje','jesienne']],['pole',['orze','skoszone']],['kombajn',['zbiera','zapracowany']],['ziemia',['sadzi','jesienne']],['chleb',['piecze','świeży']],['mąka',['miele','biała']]];
+nouns.forEach(([n,w])=>c('części mowy','Które słowo jest <b>rzeczownikiem</b> (kto? co?)',n,w,`„${n}” to nazwa osoby lub rzeczy i odpowiada na pytanie kto? co? – to rzeczownik.`));
+const adjs=[['zapracowany',['rolnik','orze']],['jesienne',['pole','sieje']],['skoszone',['kombajn','zbiera']],['kolorowe',['kredki','rysuje']],['ostre',['nożyczki','tnie']],['biała',['gumka','mażę']],['niebieski',['długopis','piszę']]];
+adjs.forEach(([a,w])=>c('części mowy','Które słowo jest <b>przymiotnikiem</b> (jaki? jaka? jakie?)',a,w,`„${a}” odpowiada na pytanie jaki? jaka? jakie? – to przymiotnik.`));
+c('części mowy','Na jakie pytania odpowiadają <b>czasowniki</b>?','co robi? co się z nim dzieje?',['kto? co?','jaki? jaka? jakie?'],RULES['części mowy']);
+c('części mowy','Na jakie pytania odpowiadają <b>przymiotniki</b>?','jaki? jaka? jakie?',['kto? co?','co robi?'],RULES['części mowy']);
+c('części mowy','Na jakie pytania odpowiadają <b>rzeczowniki</b>?','kto? co?',['co robi?','jaki? jaka? jakie?'],RULES['części mowy']);
+c('części mowy','Czasowniki to nazwy…','czynności i stanów',['osób i rzeczy','cech'],'Czasowniki to nazwy czynności i stanów.');
+c('części mowy','Dobierz przymiotnik do słowa <b>kredki</b>:','kolorowe kredki',['kolorowa kredki','kolorowy kredki'],'Przymiotnik musi pasować końcówką: jakie kredki? – kolorowe.');
+c('części mowy','Dobierz przymiotnik do słowa <b>gumka</b>:','biała gumka',['biały gumka','białe gumka'],'jaka gumka? – biała.');
+c('części mowy','Dobierz przymiotnik do słowa <b>długopis</b>:','niebieski długopis',['niebieska długopis','niebieskie długopis'],'jaki długopis? – niebieski.');
+c('części mowy','Dobierz przymiotnik do słowa <b>nożyczki</b>:','ostre nożyczki',['ostry nożyczki','ostra nożyczki'],'jakie nożyczki? – ostre.');
+
+// --- alfabet ---
+c('alfabet','Ile liter ma polski alfabet?','32',['26','35'],RULES.alfabet);
+[['K','L'],['Ł','M'],['Ń','O'],['Ó','P'],['Ć','D'],['Ę','F'],['Ź','Ż'],['U','W'],['R','S'],['A','Ą'],['H','I'],['Ś','T']].forEach(([a,b])=>x('alfabet',`Jaka litera jest w alfabecie <b>zaraz po ${a}</b>? (wpisz jedną literę)`,[b.toLowerCase()],`Po ${a} jest ${b}. ${RULES.alfabet}`));
+[['T','R','Ś'],['L','K','Ł'],['E','D','Ę']].forEach(([a,b,cc])=>0);
+c('alfabet','Ułóż po kolei alfabetycznie:','Elbląg, Gdańsk, Gdynia, Malbork, Sopot',['Gdańsk, Elbląg, Gdynia, Malbork, Sopot','Elbląg, Gdynia, Gdańsk, Malbork, Sopot'],'Gdańsk jest przed Gdynią: patrzymy na drugą literę (a jest przed y).');
+c('alfabet','Ułóż po kolei alfabetycznie:','kot, las, łoś, mysz',['kot, łoś, las, mysz','las, kot, łoś, mysz'],'K, L, Ł, M – Ł stoi zaraz po L.');
+c('alfabet','Ułóż po kolei alfabetycznie:','ala, bal, cel, dom',['bal, ala, cel, dom','ala, bal, dom, cel'],'A, B, C, D.');
+c('alfabet','Która litera jest w alfabecie <b>pierwsza</b>?','A',['B','Ą'],'Alfabet zaczyna się od A.');
+c('alfabet','Która litera jest w alfabecie <b>ostatnia</b>?','Ż',['Z','Ź'],'Alfabet kończy się na Ż.');
+
+// --- opowiadanie ---
+c('opowiadanie','Która część opowiadania odpowiada na pytanie „Od czego wszystko się zaczęło?”','wstęp',['rozwinięcie','zakończenie'],RULES.opowiadanie);
+c('opowiadanie','Która część opowiadania odpowiada na pytanie „Co się wydarzyło później?”','rozwinięcie',['wstęp','zakończenie'],RULES.opowiadanie);
+c('opowiadanie','Która część opowiadania odpowiada na pytanie „Jak to się skończyło?”','zakończenie',['wstęp','rozwinięcie'],RULES.opowiadanie);
+c('opowiadanie','Ile części ma opowiadanie?','3',['2','4'],RULES.opowiadanie);
+c('opowiadanie','Jaka jest kolejność części opowiadania?','wstęp, rozwinięcie, zakończenie',['rozwinięcie, wstęp, zakończenie','zakończenie, wstęp, rozwinięcie'],RULES.opowiadanie);
+c('opowiadanie','„Pewnego dnia Ania poszła do lasu.” To zdanie pasuje do…','wstępu',['rozwinięcia','zakończenia'],'To początek historii, czyli wstęp.');
+c('opowiadanie','„Wreszcie Ania wróciła szczęśliwa do domu.” To zdanie pasuje do…','zakończenia',['wstępu','rozwinięcia'],'To koniec historii, czyli zakończenie.');
+
+// --- zdania ---
+const sing=['Ania czyta książkę.','Rolnik sieje zboże.','Dzieci bawią się na boisku.','Kombajn zbiera plony.','Mama gotuje obiad.'];
+const comp=['Ania czyta, a Kasia rysuje.','Rolnik sieje, a kombajn zbiera.','Pada deszcz i wieje wiatr.','Gdy wróciłem, mama gotowała obiad.','Tomek gra, a Lena śpiewa.'];
+sing.forEach(s=>c('zdania',`To zdanie jest…<br><b>${s}</b>`,'pojedyncze',['złożone'],RULES.zdania));
+comp.forEach(s=>c('zdania',`To zdanie jest…<br><b>${s}</b>`,'złożone',['pojedyncze'],RULES.zdania));
+c('zdania','Zdanie pojedyncze ma…','jeden czasownik',['dwa czasowniki lub więcej','same przymiotniki'],RULES.zdania);
+c('zdania','Zdanie złożone ma…','co najmniej dwa czasowniki',['jeden czasownik','brak czasownika'],RULES.zdania);
+
+// ---------- aplikacja ----------
+const TOPICS = ['rz','ż','ch','nie','części mowy','alfabet','opowiadanie','zdania'];
+const NAMES = {'rz':'RZ','ż':'Ż','ch':'CH','nie':'„nie” z czasownikami','części mowy':'Części mowy','alfabet':'Alfabet','opowiadanie':'Opowiadanie','zdania':'Zdania pojedyncze i złożone'};
+const $ = id => document.getElementById(id);
+const rnd = n => Math.floor(Math.random()*n);
+const shuffle = a => { a=a.slice(); for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]];} return a; };
+const norm = s => s.toLowerCase().trim().replace(/\s+/g,' ');
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const SOUND = true;
+function beep(ok){ if(!SOUND) return; try{ const c=new (window.AudioContext||window.webkitAudioContext)(); const o=c.createOscillator(), g=c.createGain(); o.type=ok?'sine':'square'; o.frequency.value=ok?880:200; g.gain.value=0.1; o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+(ok?0.15:0.3)); }catch(e){} }
+
+const KEY='pol3_v1';
+let state = JSON.parse(localStorage.getItem(KEY)||'null') || {stats:{},stars:0};
+const save = () => localStorage.setItem(KEY, JSON.stringify(state));
+let active = new Set(TOPICS);
+let session = {ok:0,all:0,streak:0};
+let used = new Set();     // indeksy już zadanych pytań (bez powtórek, aż do wyczerpania)
+let cur=null, answered=false;
+
+function renderChips(){
+  $('chips').innerHTML='';
+  TOPICS.forEach(t=>{
+    const b=document.createElement('button');
+    b.className='chip'+(active.has(t)?' on':'');
+    b.textContent=NAMES[t];
+    b.onclick=()=>{ if(active.has(t)){ if(active.size>1) active.delete(t); } else active.add(t); used.clear(); renderChips(); nextQuestion(); };
+    $('chips').appendChild(b);
+  });
+}
+function renderRules(){
+  $('rules').innerHTML = TOPICS.map(t=>`<p><b>${NAMES[t]}</b><br>${RULES[t]}</p>`).join('');
+}
+function renderScore(){
+  $('sOk').textContent=session.ok; $('sAll').textContent=session.all;
+  $('sStreak').textContent=session.streak; $('sStars').textContent=state.stars;
+}
+function renderStats(){
+  $('stats').innerHTML = TOPICS.map(t=>{
+    const s=state.stats[t]||{ok:0,bad:0}, tot=s.ok+s.bad, pct=tot?Math.round(100*s.ok/tot):0;
+    return `<p style="margin:8px 0 2px">${NAMES[t]}: <b>${s.ok}/${tot}</b> (${tot?pct+'%':'brak danych'})</p><div class="bar"><div style="width:${pct}%"></div></div>`;
+  }).join('');
+}
+function pickQuestion(){
+  let idx = bank.map((q,i)=>i).filter(i=>active.has(bank[i].t));
+  let fresh = idx.filter(i=>!used.has(i));
+  if(!fresh.length){ idx.forEach(i=>used.delete(i)); fresh=idx; }
+  // częściej działy z większą liczbą błędów
+  const w = fresh.map(i=>{ const s=state.stats[bank[i].t]||{ok:0,bad:0}; return 1+2*s.bad/(s.ok+s.bad+2); });
+  let r=Math.random()*w.reduce((a,b)=>a+b,0);
+  for(let k=0;k<fresh.length;k++){ r-=w[k]; if(r<=0){ used.add(fresh[k]); return bank[fresh[k]]; } }
+  const last=fresh[fresh.length-1]; used.add(last); return bank[last];
+}
+function nextQuestion(){
+  cur = pickQuestion(); answered=false;
+  $('qTopic').textContent = NAMES[cur.t];
+  $('qText').innerHTML = cur.q;
+  $('fb').className='fb'; $('fb').innerHTML='';
+  $('hint').style.display='none';
+  $('btnHint').style.display=''; $('btnNext').style.display='none';
+  $('opts').innerHTML='';
+  if(cur.type==='choice'){
+    $('textRow').style.display='none'; $('btnCheck').style.display='none';
+    const options = shuffle([cur.r,...cur.w]);
+    options.forEach(o=>{
+      const b=document.createElement('button'); b.className='opt'; b.textContent=o;
+      b.onclick=()=>answer(o,b); $('opts').appendChild(b);
+    });
+  } else {
+    $('textRow').style.display=''; $('btnCheck').style.display='';
+    $('ans').value=''; $('ans').className=''; $('ans').disabled=false; $('ans').focus();
+  }
+}
+function answer(given, btn){
+  if(answered) return; answered=true;
+  const ok = cur.type==='choice' ? given===cur.r : cur.acc.includes(norm(given));
+  const shown = cur.type==='choice' ? cur.r : cur.acc[0].toUpperCase();
+  const s = state.stats[cur.t] = state.stats[cur.t]||{ok:0,bad:0};
+  session.all++;
+  if(ok){
+    s.ok++; session.ok++; session.streak++;
+    const star = session.streak%5===0; if(star) state.stars++;
+    $('fb').className='fb ok';
+    $('fb').innerHTML='<div class="big">✅ DOBRZE!</div>'+['Brawo!','Świetnie!','Super!','Dokładnie tak!'][rnd(4)]+(star?'<br>⭐ Nowa gwiazdka za 5 dobrych odpowiedzi z rzędu!':'');
+  } else {
+    s.bad++; session.streak=0;
+    $('fb').className='fb bad';
+    $('fb').innerHTML=`<div class="big">❌ BŁĄD</div>Twoja odpowiedź: <b>${esc(given)}</b><br>Poprawna odpowiedź: <b>${esc(shown)}</b><br>💡 ${cur.e}<br><br>📖 <b>Zasada:</b> ${RULES[cur.t]}`;
+  }
+  if(cur.type==='choice'){
+    [...$('opts').children].forEach(b=>{ b.disabled=true; if(b.textContent===cur.r) b.classList.add('right'); else if(b===btn) b.classList.add('wrong'); });
+  } else {
+    $('ans').className=ok?'ok':'bad'; $('ans').disabled=true; $('btnCheck').style.display='none';
+  }
+  beep(ok); save(); renderScore(); renderStats();
+  $('btnHint').style.display='none'; $('btnNext').style.display='';
+  $('fb').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function checkText(){ if(answered) return; const v=$('ans').value; if(!v.trim()){ $('ans').focus(); return; } answer(v); }
+
+$('btnCheck').onclick=checkText;
+$('btnNext').onclick=nextQuestion;
+$('btnHint').onclick=()=>{ $('hint').innerHTML='💡 <b>Zasada:</b> '+RULES[cur.t]; $('hint').style.display='block'; };
+$('btnReset').onclick=()=>{ if(confirm('Na pewno wyczyścić wyniki i gwiazdki?')){ state={stats:{},stars:0}; save(); renderStats(); renderScore(); } };
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter') return;
+  if(e.target.tagName==='BUTTON' && e.target.classList.contains('opt')) return;
+  e.preventDefault(); if(e.repeat) return;
+  if(answered) nextQuestion(); else if(cur && cur.type==='text') checkText();
+});
+
+renderChips(); renderRules(); renderScore(); renderStats(); nextQuestion();
+</script>
+</body>
+</html>
